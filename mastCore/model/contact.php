@@ -43,13 +43,13 @@ class Contact implements \JsonSerializable{
     function __construct()
     {
         $this->id = 0;
-        $this->firstName = "";
-        $this->name = "";
-        $this->mail = "";
-        $this->phone = "";
-        $this->company = "";
-        $this->address = new Address();
-        $this->type = new Type(0,"");
+        $this->firstName = null;
+        $this->name = null;
+        $this->mail = null;
+        $this->phone = null;
+        $this->company = null;
+        $this->address = null;
+        $this->type = null;
     }
 
 

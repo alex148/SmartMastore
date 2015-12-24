@@ -40,13 +40,13 @@ class Address implements \JsonSerializable{
 
     public function __construct(){
         $this->id = 0;
-        $this->name = "";
-        $this->line1 = "";
-        $this->line2 = "";
-        $this->city = "";
-        $this->zipCode = "";
-        $this->latitude = 0.0;
-        $this->longitude = 0.0;
+        $this->name = null;
+        $this->line1 = null;
+        $this->line2 = null;
+        $this->city = null;
+        $this->zipCode = null;
+        $this->latitude = null;
+        $this->longitude = null;
     }
 
     /**
