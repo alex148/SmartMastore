@@ -2,7 +2,7 @@
 /**
  * Contains NTLMSoapClient_Exchange.
  */
-
+require_once 'NTLMSoapClient.php';
 /**
  * Handles Soap communication with the Exchange server using NTLM
  * authentication

@@ -2,7 +2,7 @@
 /**
  * Contains EWSType_FindItemType.
  */
-
+require_once 'EWSType.php';
 /**
  * Defines a request to find items in a mailbox.
  *

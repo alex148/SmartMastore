@@ -2,5 +2,10 @@
     "require": {
         "slim/slim": "3.0",
         "slim/csrf": "^0.6.0"
+    },
+    "autoload": {
+      "psr-0": {
+        "": "vendor/php-ews"
+      }
     }
 }
