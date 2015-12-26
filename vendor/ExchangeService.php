@@ -1,6 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
+ * Created by Alexandre Brosse
  * User: Alex
  * Date: 25/12/2015
  * Time: 10:58
@@ -24,63 +24,92 @@ class ExchangeService extends ExchangeConnection{
         parent::__construct();
     }
 
+    /**
+     * Used to get all the contacts from Exchange
+     * @return array of contact
+     */
     public function getAllContacts(){
-        $contactList = [];
-        $request = new EWSType_FindItemType();
+        try{
+            $contactList = [];
+            $request = new EWSType_FindItemType();
 
-        $request->ItemShape = new EWSType_ItemResponseShapeType();
-        $request->ItemShape->BaseShape = EWSType_DefaultShapeNamesType::ALL_PROPERTIES;
+            $request->ItemShape = new EWSType_ItemResponseShapeType();
+            $request->ItemShape->BaseShape = EWSType_DefaultShapeNamesType::ALL_PROPERTIES;
 
-        $request->ContactsView = new EWSType_ContactsViewType();
-        $request->ContactsView->InitialName = 'a';
-        $request->ContactsView->FinalName = 'z';
+            $request->ContactsView = new EWSType_ContactsViewType();
+            $request->ContactsView->InitialName = 'a';
+            $request->ContactsView->FinalName = 'z';
 
-        $request->ParentFolderIds = new EWSType_NonEmptyArrayOfBaseFolderIdsType();
-        $request->ParentFolderIds->DistinguishedFolderId = new EWSType_DistinguishedFolderIdType();
-        $request->ParentFolderIds->DistinguishedFolderId->Id = EWSType_DistinguishedFolderIdNameType::CONTACTS;
+            $request->ParentFolderIds = new EWSType_NonEmptyArrayOfBaseFolderIdsType();
+            $request->ParentFolderIds->DistinguishedFolderId = new EWSType_DistinguishedFolderIdType();
+            $request->ParentFolderIds->DistinguishedFolderId->Id = EWSType_DistinguishedFolderIdNameType::CONTACTS;
 
-        $request->Traversal = EWSType_ItemQueryTraversalType::SHALLOW;
+            $request->Traversal = EWSType_ItemQueryTraversalType::SHALLOW;
 
-        $response = parent::getEws()->FindItem($request);
-        $stdContacts = $response->ResponseMessages->FindItemResponseMessage->RootFolder->Items;
-        $i = 0;
-        foreach ($stdContacts as $c){
-            $contact = new Contact();
-            $contact->setFirstName($c[$i]->CompleteName->FirstName);
-            $contact->setName($c[$i]->CompleteName->LastName);
-            if( is_array($c[$i]->PhoneNumbers->Entry)){ //todo gerer multi phone
-                $contact->setPhone($c[$i]->PhoneNumbers->Entry[0]->_);
-            }else{
-                $contact->setPhone($c[$i]->PhoneNumbers->Entry->_);
+            $response = parent::getEws()->FindItem($request);
+            $stdContacts = $response->ResponseMessages->FindItemResponseMessage->RootFolder->Items->Contact;
+
+            foreach ($stdContacts as $c){
+                $contact = new Contact();
+                if(isset($c->CompleteName)){
+                    if(isset($c->CompleteName->FirstName)){
+                        $contact->setFirstName($c->CompleteName->FirstName);
+                    }
+                    if(isset($c->CompleteName->LastName)){
+                        $contact->setName($c->CompleteName->LastName);
+                    }
+                }
+                if(isset($c->PhoneNumbers->Entry)){
+                    if( is_array($c->PhoneNumbers->Entry)){ //todo gerer multi phone
+                        $contact->setPhone($c->PhoneNumbers->Entry[0]->_);
+                    }else{
+                        $contact->setPhone($c->PhoneNumbers->Entry->_);
+                    }
+                }
+                if(isset($c->EmailAddresses->Entry)){
+                    if( is_array($c->EmailAddresses->Entry)){   //todo gerer multi mail
+                        $contact->setMail($c->EmailAddresses->Entry[0]->_);
+                    }else{
+                        $contact->setMail($c->EmailAddresses->Entry->_);
+                    }
+                }
+                if(isset($c->CompanyName)){
+                    $contact->setCompany($c->CompanyName);
+                }
+                if(isset($c->PhysicalAddresses->Entry)){
+                    $address = new Address();
+                    $stdAddress = $c->PhysicalAddresses->Entry;
+                    if(is_array($stdAddress)){ //todo gerer multi adresse
+                        $address->setName($stdAddress[0]->Key);
+                        $address->setLine1($stdAddress[0]->Street);
+                        $address->setZipCode($stdAddress[0]->PostalCode);
+                        $address->setCity($stdAddress[0]->City);
+                        //     $address->setLongitude($stdAddress[0]->); //todo gerer lat long
+                        //     $address->setLatitude($stdAddress[0]->);
+                    }else{
+                        $address->setName($stdAddress->Key);
+                        $address->setLine1($stdAddress->Street);
+                        $address->setZipCode($stdAddress->PostalCode);
+                        $address->setCity($stdAddress->City);
+                        //    $address->setLongitude($stdAddress->);    //todo gerer lat long
+                        //    $address->setLatitude($stdAddress->);
+                    }
+                    $contact->setAddress($address);
+                }
+                $contact->setType(null);    //todo gerer type
+                array_push($contactList,$contact);
             }
-            if( is_array($c[$i]->EmailAddresses->Entry)){   //todo gerer multi mail
-                $contact->setMail($c[$i]->EmailAddresses->Entry[0]->_);
-            }else{
-                $contact->setMail($c[$i]->EmailAddresses->Entry->_);
+            if($contactList == []){
+                $contactList = null;
             }
-            $contact->setCompany($c[$i]->CompanyName);
-            $address = new Address();
-            $stdAddress = $c[$i]->PhysicalAddresses->Entry;
-            if(is_array($stdAddress)){ //todo gerer multi adresse
-                $address->setName($stdAddress[0]->Key);
-                $address->setLine1($stdAddress[0]->Street);
-                $address->setZipCode($stdAddress[0]->PostalCode);
-                $address->setCity($stdAddress[0]->City);
-           //     $address->setLongitude($stdAddress[0]->); //todo gerer lat long
-           //     $address->setLatitude($stdAddress[0]->);
-            }else{
-                $address->setName($stdAddress->Key);
-                $address->setLine1($stdAddress->Street);
-                $address->setZipCode($stdAddress->PostalCode);
-                $address->setCity($stdAddress->City);
-            //    $address->setLongitude($stdAddress->);    //todo gerer lat long
-            //    $address->setLatitude($stdAddress->);
-            }
-            $contact->setAddress($address);
-            $contact->setType(null);    //todo gerer type
-            array_push($contactList,$contact);
-            $i++;
+            return $contactList;
+        }catch(Exception $e){
+            error_log($e->getMessage());
         }
-        return $contactList;
+        return null;
+    }
+
+    public function addContact(Contact $contact){   //todo
+        return true;
     }
 }

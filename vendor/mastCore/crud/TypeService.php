@@ -5,7 +5,7 @@
  * Date: 24/12/2015
  * Time: 14:19
  */
-require_once'DataBaseConnection.php';
+require_once 'DataBaseConnection.php';
 
 class TypeService extends DataBaseConnection{
 
@@ -35,7 +35,22 @@ class TypeService extends DataBaseConnection{
     }
 
     public function getType($id){
-
+        try{
+            if(!parent::getBdd()->inTransaction()){
+                parent::getBdd()->beginTransaction();
+            }
+            $query = "SELECT * FROM TYPE WHERE ID = :id";
+            $request = parent::getBdd()->prepare($query);
+            $request->bindParam(':id',$id);
+            $request->execute();
+            $typeData = $request->fetch();
+            $type = new Type($typeData['id'],$typeData['label']);
+            $request->closeCursor();
+            return $type;
+        }catch(Exception $e){
+            error_log($e->getMessage());
+        }
+        return null;
     }
 
     public function addType(Type $type){

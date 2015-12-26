@@ -1,3 +1,9 @@
+/**
+ * Created by Alexandre Brosse.
+ * User: Alex
+ * Date: 23/12/2015
+ * Time: 14:15
+ */
 drop table if exists contact ;
 drop table if exists address ;
 drop table if exists type;

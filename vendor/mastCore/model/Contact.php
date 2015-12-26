@@ -154,7 +154,7 @@ class Contact implements \JsonSerializable{
      */
     public function getAddress()
     {
-        return $this->address;
+            return $this->address;
     }
 
     /**
