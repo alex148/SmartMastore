@@ -57,7 +57,7 @@ class ContactService extends DataBaseConnection {
         
     }
     
-    public function addContact(Contact $contact)
+    public function addContact(Contact $contact)  //todo gerer type
     {
         try{
             if($contact->getAddress() != null){
@@ -74,7 +74,6 @@ class ContactService extends DataBaseConnection {
             }
             if(!parent::getBdd()->inTransaction()){
                 parent::getBdd()->beginTransaction();
-                echo 'ok1';
             }
             if($contact->getAddress()->getId() != null){
                 $query = "INSERT INTO CONTACT VALUES(null,:fName, :name, :mail, :phone, :company, :addrId, null)"; //todo add type

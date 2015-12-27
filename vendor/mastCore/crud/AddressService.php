@@ -7,14 +7,16 @@
  * Time: 14:20
  */
 require_once 'DataBaseConnection.php';
-
-
+require_once 'GoogleMapService.php';
 
 
 class AddressService extends DataBaseConnection {
 
+    private $googleMapService;
+
     public function __construct(){
         parent::__construct();
+        $this->googleMapService = new GoogleMapService();
     }
     
     public function getAllAddresses(){
@@ -75,12 +77,19 @@ class AddressService extends DataBaseConnection {
 
     public function addAddress(Address $address){
         try{
-            if(!parent::getBdd()->inTransaction()){
-                 parent::getBdd()->beginTransaction();
-
-            }
-            echo "<pre>".print_r($address,true)."</pre>";
             if($address != null){
+                $latLong = [];
+                if(($address->getLatitude() == null && $address->getLongitude() == null) ||
+                    ($address->getLatitude() == 0.0 && $address->getLongitude() == 0.0)){
+                    $latLong = $this->googleMapService->getLatLong($address);
+                    if(sizeof($latLong) == 2){
+                        $address->setLatitude($latLong[0]);
+                        $address->setLongitude($latLong[1]);
+                    }
+                }
+                if(!parent::getBdd()->inTransaction()){
+                    parent::getBdd()->beginTransaction();
+                }
                 $query = "INSERT INTO ADDRESS VALUES (NULL,:name,:line1, :line2, :zipcode, :city, :lat, :long)";
                 $request = parent::getBdd()->prepare($query);
                 $request->bindParam(':name',$address->getName());
@@ -88,12 +97,11 @@ class AddressService extends DataBaseConnection {
                 $request->bindParam(':line2',$address->getLine2());
                 $request->bindParam(':zipcode',$address->getZipCode());
                 $request->bindParam(':city',$address->getCity());
-                $request->bindParam(':lat',$address->getLatitude());
-                $request->bindParam(':long',$address->getLongitude());
+                $request->bindParam(':lat', $address->getLatitude());
+                $request->bindParam(':long', $address->getLongitude());
                 $request->execute();
                 $id = parent::getBdd()->lastInsertId();
                 $request->closeCursor();
-                echo $id;
                 parent::getBdd()->commit();
                 return $id;
              }

@@ -37,6 +37,7 @@ class MastCoreService {
             }
             //check that all Exchange contacts are in database
             foreach($exContacts as $exContact){
+
                 $existAlready = false;
                 foreach($dbContacts as $dbContact){
                     if(strcasecmp($dbContact->getMail(),$exContact->getMail()) == 0 && strcasecmp($dbContact->getPhone(),$exContact->getPhone()) == 0){

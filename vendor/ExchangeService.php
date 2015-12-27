@@ -15,7 +15,21 @@ require_once 'php-ews/EWSType/NonEmptyArrayOfBaseFolderIdsType.php';
 require_once 'php-ews/EWSType/DistinguishedFolderIdType.php';
 require_once 'php-ews/EWSType/DistinguishedFolderIdNameType.php';
 require_once 'php-ews/EWSType/ItemQueryTraversalType.php';
+require_once 'php-ews/EWSType/CreateItemType.php';
+require_once 'php-ews/EWSType/ContactItemType.php';
+require_once 'php-ews/EWSType/EmailAddressDictionaryEntryType.php';
+require_once 'php-ews/EWSType/EmailAddressKeyType.php';
+require_once 'php-ews/EWSType/EmailAddressDictionaryType.php';
+require_once 'php-ews/EWSType/PhysicalAddressDictionaryEntryType.php';
+require_once 'php-ews/EWSType/PhysicalAddressKeyType.php';
+require_once 'php-ews/EWSType/PhysicalAddressDictionaryType.php';
+require_once 'php-ews/EWSType/PhoneNumberDictionaryEntryType.php';
+require_once 'php-ews/EWSType/PhoneNumberKeyType.php';
+require_once 'php-ews/EWSType/FileAsMappingType.php';
+require_once 'php-ews/EWSType/PhoneNumberDictionaryType.php';
 require_once 'php-ews/NTLMSoapClient/Exchange.php';
+require_once 'mastCore/model/Address.php';
+require_once 'mastCore/model/Type.php';
 
 class ExchangeService extends ExchangeConnection{
 
@@ -28,7 +42,7 @@ class ExchangeService extends ExchangeConnection{
      * Used to get all the contacts from Exchange
      * @return array of contact
      */
-    public function getAllContacts(){
+    public function getAllContacts(){   //todo gerer type
         try{
             $contactList = [];
             $request = new EWSType_FindItemType();
@@ -37,8 +51,6 @@ class ExchangeService extends ExchangeConnection{
             $request->ItemShape->BaseShape = EWSType_DefaultShapeNamesType::ALL_PROPERTIES;
 
             $request->ContactsView = new EWSType_ContactsViewType();
-            $request->ContactsView->InitialName = 'a';
-            $request->ContactsView->FinalName = 'z';
 
             $request->ParentFolderIds = new EWSType_NonEmptyArrayOfBaseFolderIdsType();
             $request->ParentFolderIds->DistinguishedFolderId = new EWSType_DistinguishedFolderIdType();
@@ -84,15 +96,17 @@ class ExchangeService extends ExchangeConnection{
                         $address->setLine1($stdAddress[0]->Street);
                         $address->setZipCode($stdAddress[0]->PostalCode);
                         $address->setCity($stdAddress[0]->City);
-                        //     $address->setLongitude($stdAddress[0]->); //todo gerer lat long
-                        //     $address->setLatitude($stdAddress[0]->);
                     }else{
                         $address->setName($stdAddress->Key);
-                        $address->setLine1($stdAddress->Street);
-                        $address->setZipCode($stdAddress->PostalCode);
-                        $address->setCity($stdAddress->City);
-                        //    $address->setLongitude($stdAddress->);    //todo gerer lat long
-                        //    $address->setLatitude($stdAddress->);
+                        if(isset($stdAddress->Street)){
+                            $address->setLine1($stdAddress->Street);
+                        }
+                        if(isset($stdAddress->PostalCode)){
+                            $address->setZipCode($stdAddress->PostalCode);
+                        }
+                        if(isset($stdAddress->City)){
+                            $address->setCity($stdAddress->City);
+                        }
                     }
                     $contact->setAddress($address);
                 }
@@ -109,7 +123,64 @@ class ExchangeService extends ExchangeConnection{
         return null;
     }
 
-    public function addContact(Contact $contact){   //todo
-        return true;
+    public function addContact(Contact $c){   //todo add type
+        try{
+            $request = new EWSType_CreateItemType();
+
+            $contact = new EWSType_ContactItemType();
+            if($c->getFirstName() != null){
+                $contact->GivenName = $c->getFirstName();
+            }
+            if($c->getName()){
+                $contact->Surname = $c->getName();
+            }
+            if($c->getMail() != null){
+                $email = new EWSType_EmailAddressDictionaryEntryType();
+                $email->Key = new EWSType_EmailAddressKeyType();
+                $email->Key->_ = EWSType_EmailAddressKeyType::EMAIL_ADDRESS_1;
+                $email->_ = $c->getMail();
+                $contact->EmailAddresses = new EWSType_EmailAddressDictionaryType();
+                $contact->EmailAddresses->Entry[] = $email;
+            }
+            $addr = $c->getAddress();
+            if($addr != null){
+                $address = new EWSType_PhysicalAddressDictionaryEntryType();
+                $address->Key = new EWSType_PhysicalAddressKeyType();
+                $address->Key->_ = EWSType_PhysicalAddressKeyType::BUSINESS;
+                if($addr->getLine1() != null){
+                    $address->Street = $addr->getLine1();
+                }
+                if($addr->getCity() != null){
+                    $address->City = $addr->getCity();
+
+                }
+                if($addr->getZipCode() != null){
+                    $address->PostalCode = $addr->getZipCode();
+                }
+                $contact->PhysicalAddresses = new EWSType_PhysicalAddressDictionaryType();
+                $contact->PhysicalAddresses->Entry[] = $address;
+            }
+
+
+            if($c->getPhone() != null){
+                $phone = new EWSType_PhoneNumberDictionaryEntryType();
+                $phone->Key = new EWSType_PhoneNumberKeyType();
+                $phone->Key->_ = EWSType_PhoneNumberKeyType::BUSINESS_PHONE;
+                $phone->_ = $c->getPhone();
+                $contact->PhoneNumbers = new EWSType_PhoneNumberDictionaryType();
+                $contact->PhoneNumbers->Entry[] = $phone;
+            }
+
+            $contact->FileAsMapping = new EWSType_FileAsMappingType();  //?
+            $contact->FileAsMapping->_ = EWSType_FileAsMappingType::FIRST_SPACE_LAST;
+
+            $request->Items->Contact[] = $contact;
+
+            $result = parent::getEws()->CreateItem($request);
+            return true;
+        }catch(Exception $e){
+            error_log($e->getMessage());
+        }
+        return false;
     }
 }

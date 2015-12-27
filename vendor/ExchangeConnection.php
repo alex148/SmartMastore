@@ -15,7 +15,6 @@ abstract class ExchangeConnection {
               $this->ews = new ExchangeWebServices("ex.mail.ovh.net", "contact@sitalia.fr", "Nv412glk");
         }catch(Exception $e){
             error_log($e->getMessage());
-            echo 'ko';
         }
     }
 
