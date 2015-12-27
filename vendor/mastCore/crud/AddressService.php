@@ -113,11 +113,54 @@ class AddressService extends DataBaseConnection {
     }
 
     public function updateAddress(Address $address){
-
+        try{
+            if($address != null && ($address->getId() == null || $address->getId() == -1)){
+                return false;
+            }
+            if(!parent::getBdd()->inTransaction()){
+                parent::getBdd()->beginTransaction();
+            }
+            $query = "UPDATE ADDRESS SET name = :name, line1 = :line1, line2 = :line2
+                      , zipcode = :zip, city = :city, latitude = :lat, longitude = :lon
+                      WHERE id = :id";
+            $request = parent::getBdd()->prepare($query);
+            $request->bindParam(':id',$address->getId());
+            $request->bindParam(':name',$address->getName());
+            $request->bindParam(':line1',$address->getLine1());
+            $request->bindParam(':line2',$address->getLine2());
+            $request->bindParam(':zipcode',$address->getZipCode());
+            $request->bindParam(':city',$address->getCity());
+            $request->bindParam(':lat', $address->getLatitude());
+            $request->bindParam(':long', $address->getLongitude());
+            $request->execute();
+            parent::getBdd()->commit();
+            $request->closeCursor();
+            return true;
+        }catch(Exception $e){
+            error_log($e->getMessage());
+        }
+        return false;
     }
 
     public function deleteAddress($id){
-
+        try{
+            if($id == null || $id == -1){
+                return false;
+            }
+            if(!parent::getBdd()->inTransaction()){
+                parent::getBdd()->beginTransaction();
+            }
+            $query = "DELETE FROM ADDRESS WHERE id = :id";
+            $request = parent::getBdd()->prepare($query);
+            $request->bindParam(':id',$id);
+            $request->execute();
+            parent::getBdd()->commit();
+            $request->closeCursor();
+            return true;
+        }catch(Exception $e){
+            error_log($e->getMessage());
+        }
+        return false;
     }
     
 }

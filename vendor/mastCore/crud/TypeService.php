@@ -15,9 +15,11 @@ class TypeService extends DataBaseConnection{
     }
 
     public function getAllTypes(){
-        $list = [];
-        $hasTransaction = parent::getBdd()->beginTransaction();
-        if($hasTransaction){
+        try{
+            $list = [];
+            if(!parent::getBdd()->inTransaction()){
+                parent::getBdd()->beginTransaction();
+            }
             $query = "SELECT * FROM TYPE";
             $response = parent::getBdd()->query($query);
             while($data = $response->fetch()){
@@ -29,9 +31,10 @@ class TypeService extends DataBaseConnection{
                 return null;
             }
             return $list;
+        }catch (Exception $e){
+            error_log($e->getMessage());
         }
-        error_log('Transaction error');
-        return null;
+        return [];
     }
 
     public function getType($id){
@@ -54,14 +57,66 @@ class TypeService extends DataBaseConnection{
     }
 
     public function addType(Type $type){
-
+        try{
+            if($type == null){
+                return false;
+            }
+            if(!parent::getBdd()->inTransaction()){
+                parent::getBdd()->beginTransaction();
+            }
+            $query = "INSERT INTO TYPE VALUES(NULL,:label)";
+            $request = parent::getBdd()->prepare($query);
+            $request->bindParam(':label', $type->getLabel());
+            $request->execute();
+            parent::getBdd()->commit();
+            $request->closeCursor();
+            return true;
+        }catch(Exception $e){
+            error_log($e->getMessage());
+        }
+        return false;
     }
 
     public function updateType(Type $type){
-
+        try{
+            if ($type != null && ($type->getId() == null) || $type == -1){
+                return false;
+            }
+            if(!parent::getBdd()->inTransaction()){
+                parent::getBdd()->beginTransaction();
+            }
+            $query = "UPDATE TYPE SET label = :label WHERE id = :id";
+            $request = parent::getBdd()->prepare($query);
+            $request->bindParam(':id',$type->getId());
+            $request->bindParam(':label', $type->getLabel());
+            $request->execute();
+            parent::getBdd()->commit();
+            $request->closeCursor();
+            return true;
+        }catch(Exception $e){
+            error_log($e->getMessage());
+        }
+        return false;
     }
 
     public function deleteType($id){
-
+        try{
+            if($id == null || $id == -1){
+                return false;
+            }
+            if(!parent::getBdd()->inTransaction()){
+                parent::getBdd()->beginTransaction();
+            }
+            $query = "DELETE FROM TYPE WHERE ID = :id";
+            $request = parent::getBdd()->prepare($query);
+            $request->bindParam(':id', $id);
+            $request->execute();
+            parent::getBdd()->commit();
+            $request->closeCursor();
+            return true;
+        }catch(Exception $e){
+            error_log($e->getMessage());
+        }
+        return false;
     }
 }

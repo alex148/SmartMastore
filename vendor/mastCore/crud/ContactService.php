@@ -104,11 +104,64 @@ class ContactService extends DataBaseConnection {
     }
     
     public function updateContact(Contact $contact){
-
+        if($contact != null && ($contact->getId() == null || $contact->getId() == -1)){
+            return false;
+        }
+        try{
+            if($contact->getAddress() != null && $contact->getAddress()->getId != null){
+                $this->addressService->updateAddress($contact->getAddress());
+            }
+            if($contact->getType() != null && $contact->getType()->getId() != null){
+                $this->typeService->updateType($contact->getType());
+            }
+            if(!parent::getBdd()->inTransaction()){
+                parent::getBdd()->beginTransaction();
+            }
+            $query = "UPDATE CONTACT SET firstName = :fName, name = :name, mail = :mail,
+                      phone = :phone, company = :company
+                      WHERE id = :id";
+            $request = parent::getBdd()->prepare($query);
+            $request->bindParam(':id',$contact->getId());
+            $request->bindParam(':fName',$contact->getFirstName());
+            $request->bindParam(':name',$contact->getName());
+            $request->bindParam(':mail',$contact->getMail());
+            $request->bindParam(':phone',$contact->getPhone());
+            $request->bindParam(':company',$contact->getCompany());
+            $request->execute();
+            parent::getBdd()->commit();
+            $request->closeCursor();
+            return true;
+        }catch(Exception $e){
+            error_log($e->getMessage());
+        }
+        return false;
     }
 
-    public function deleteContact($id){
-
+    public function deleteContact(Contact $c){
+        if($c != null ($c->getId() == null || $c->getId() == -1)){
+            return false;
+        }
+        try{
+            if(!parent::getBdd()->inTransaction()){
+                parent::getBdd()->beginTransaction();
+            }
+            $query = "DELETE FROM CONTACT WHERE ID = :id";
+            $request = parent::getBdd()->prepare($query);
+            $request->bindParam(':id', $id);
+            $request->execute();
+            parent::getBdd()->commit();
+            $request->closeCursor();
+            if($c->getAddress() != null && $c->getAddress()->getId() != null){
+                $this->addressService->deleteAddress($c->getAddress()->getId());
+            }
+            if($c->getType() != null && $c->getType()->getId() != null){
+                $this->typeService->deleteType($c->getType()->getId());
+            }
+            return true;
+        }catch(Exception $e){
+            error_log($e->getMessage());
+        }
+        return false;
     }
     
 }
