@@ -37,6 +37,25 @@ class TypeService extends DataBaseConnection{
         return [];
     }
 
+    public function getTypeByLabel($label){
+        try{
+            if(!parent::getBdd()->inTransaction()){
+                parent::getBdd()->beginTransaction();
+            }
+            $query = "SELECT ID FROM TYPE WHERE LABEL like :label";
+            $request = parent::getBdd()->prepare($query);
+            $request->bindParam(':label',$label);
+            $request->execute();
+            $typeData = $request->fetch();
+            if(isset($typeData[0])){
+                return $typeData[0];
+            }
+        }catch(Exception $e){
+            error_log($e->getMessage());
+        }
+        return -1;
+    }
+
     public function getType($id){
         try{
             if(!parent::getBdd()->inTransaction()){
@@ -68,13 +87,14 @@ class TypeService extends DataBaseConnection{
             $request = parent::getBdd()->prepare($query);
             $request->bindParam(':label', $type->getLabel());
             $request->execute();
-            parent::getBdd()->commit();
+            $id = parent::getBdd()->lastInsertId();
             $request->closeCursor();
-            return true;
+            parent::getBdd()->commit();
+            return $id;
         }catch(Exception $e){
             error_log($e->getMessage());
         }
-        return false;
+        return -1;
     }
 
     public function updateType(Type $type){

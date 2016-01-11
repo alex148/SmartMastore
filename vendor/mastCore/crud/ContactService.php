@@ -29,15 +29,25 @@ class ContactService extends DataBaseConnection {
             $response = parent::getBdd()->query($query);
             while ($data = $response->fetch()) {
                 $contact = new Contact();
-                $contact->setId($data['id']);
-                $contact->setFirstName($data['firstName']);
-                $contact->setName($data['name']);
-                $contact->setMail($data['mail']);
-                $contact->setPhone($data['phone']);
-                if ($data['address'] != null) {
+                if(isset($data['id'])){
+                    $contact->setId($data['id']);
+                }
+                if(isset($data['firstName'])){
+                    $contact->setFirstName($data['firstName']);
+                }
+                if(isset($data['name'])){
+                    $contact->setName($data['name']);
+                }
+                if(isset($data['mail'])){
+                    $contact->setMail($data['mail']);
+                }
+                if(isset($data['phone'])){
+                    $contact->setPhone($data['phone']);
+                }
+                if (isset($data['address'])) {
                     $contact->setAddress($this->addressService->getAddress($data['address']));
                 }
-                if ($data['type'] != null) {
+                if (isset($data['type'])) {
                     $contact->setType($this->typeService->getType($data['type']));
                 }
                 array_push($list, $contact);
@@ -69,17 +79,31 @@ class ContactService extends DataBaseConnection {
                 }
             }
             if($contact->getType() != null){
-                //todo gerer type
-
+                $typeId = $this->typeService->getTypeByLabel($contact->getType()->getLabel());
+                if($typeId != -1){
+                    $contact->getType()->setId($typeId);
+                }else{
+                    $contact->getType()->setId(null);
+                }
             }
             if(!parent::getBdd()->inTransaction()){
                 parent::getBdd()->beginTransaction();
             }
             if($contact->getAddress()->getId() != null){
-                $query = "INSERT INTO CONTACT VALUES(null,:fName, :name, :mail, :phone, :company, :addrId, null)"; //todo add type
-            }else{
-                $query = "INSERT INTO CONTACT VALUES(null,:fName, :name, :mail, :phone, :company, null, null)"; //todo add type
+                if($contact->getType()->getId() != null){
+                    $query = "INSERT INTO CONTACT VALUES(null,:fName, :name, :mail, :phone, :company, :addrId, :typeId)";
 
+                }else{
+                    $query = "INSERT INTO CONTACT VALUES(null,:fName, :name, :mail, :phone, :company, :addrId, null)";
+                }
+            }else{
+                if($contact->getType()->getId() != null){
+                    $query = "INSERT INTO CONTACT VALUES(null,:fName, :name, :mail, :phone, :company, null, :typeId)";
+
+                }else{
+                    $query = "INSERT INTO CONTACT VALUES(null,:fName, :name, :mail, :phone, :company, null, null)";
+
+                }
             }
             $request = parent::getBdd()->prepare($query);
             $request->bindParam(':fName',$contact->getFirstName());
@@ -90,17 +114,18 @@ class ContactService extends DataBaseConnection {
             if($contact->getAddress()->getId() != null) {
                 $request->bindParam(':addrId', $contact->getAddress()->getId());
             }
-            //$request->bindParam(':typeId',null); //todo
+            if($contact->getType()->getId() != null){
+                $request->bindParam(':typeId', $contact->getType()->getId());
+            }
             $request->execute();
             $id = parent::getBdd()->lastInsertId();
             $request->closeCursor();
             parent::getBdd()->commit();
-            $contact->setId($id);
-            return true;
+            return $id;
         }catch(Exception $e){
             error_log($e->getMessage());
         }
-        return false;
+        return -1;
     }
     
     public function updateContact(Contact $contact){
@@ -163,5 +188,7 @@ class ContactService extends DataBaseConnection {
         }
         return false;
     }
+
+
     
 }

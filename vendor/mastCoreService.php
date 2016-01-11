@@ -46,8 +46,8 @@ class MastCoreService {
                     }
                 }
                 if(!$existAlready){
-                    if(!$this->databaseService->addContact($exContact)){
-                        error_log("Contact creation from Exchange to database error");
+                    if($this->databaseService->addContact($exContact) == -1){
+                        error_log("Contact creation from Exchange to database failed. Contact [".$exContact->getFirstName()." ".$exContact->getName()." ]" );
                         $error = true;
                     }
                 }
@@ -63,7 +63,7 @@ class MastCoreService {
                 }
                 if(!$existAlready){
                     if(!$this->exchangeService->addContact($dbContact)){
-                        error_log("Contact creation from database to Exchange error");
+                        error_log("Contact creation from database to Exchange error. Contact [".$dbContact->getFirstName()." ".$dbContact->getName()." ]");
                         $error = true;
                     }
                 }
@@ -72,7 +72,7 @@ class MastCoreService {
         }catch(Exception $e){
             error_log($e->getMessage());
         }
-        return false;
+        return true;
 
     }
 }

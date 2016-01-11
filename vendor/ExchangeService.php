@@ -123,15 +123,20 @@ class ExchangeService extends ExchangeConnection{
         return null;
     }
 
-    public function addContact(Contact $c){   //todo add type
+    public function addContact(Contact $c){
         try{
             $request = new EWSType_CreateItemType();
 
             $contact = new EWSType_ContactItemType();
             if($c->getFirstName() != null){
-                $contact->GivenName = $c->getFirstName();
+                    $contact->GivenName = $c->getFirstName();
             }
             if($c->getName()){
+                $contact->Surname = $c->getName();
+            }
+            if($c->getType() != null){
+                $contact->Surname = $c->getName().' - '.$c->getType()->getLabel();
+            }else{
                 $contact->Surname = $c->getName();
             }
             if($c->getMail() != null){
@@ -148,7 +153,11 @@ class ExchangeService extends ExchangeConnection{
                 $address->Key = new EWSType_PhysicalAddressKeyType();
                 $address->Key->_ = EWSType_PhysicalAddressKeyType::BUSINESS;
                 if($addr->getLine1() != null){
-                    $address->Street = $addr->getLine1();
+                    if($addr->getLine2() != null){
+                        $address->Street = $addr->getLine1().' '.$addr->getLine2();
+                    }else{
+                        $address->Street = $addr->getLine1();
+                    }
                 }
                 if($addr->getCity() != null){
                     $address->City = $addr->getCity();
