@@ -28,7 +28,6 @@ class AddressService extends DataBaseConnection {
             while($data = $response->fetch()){
                 $address = new Address();
                 $address->setId($data['id']);
-                $address->setName($data['name']);
                 $address->setLine1($data['line1']);
                 $address->setLine2($data['line2']);
                 $address->setZipCode($data['zipcode']);
@@ -59,7 +58,6 @@ class AddressService extends DataBaseConnection {
             $adrData = $request->fetch();
             $address = new Address();
             $address->setId($adrData['id']);
-            $address->setName($adrData['name']);
             $address->setLine1($adrData['line1']);
             $address->setLine2($adrData['line2']);
             $address->setZipCode($adrData['zipcode']);
@@ -90,9 +88,8 @@ class AddressService extends DataBaseConnection {
                 if(!parent::getBdd()->inTransaction()){
                     parent::getBdd()->beginTransaction();
                 }
-                $query = "INSERT INTO ADDRESS VALUES (NULL,:name,:line1, :line2, :zipcode, :city, :lat, :long)";
+                $query = "INSERT INTO ADDRESS VALUES (NULL,:line1, :line2, :zipcode, :city, :lat, :long)";
                 $request = parent::getBdd()->prepare($query);
-                $request->bindParam(':name',$address->getName());
                 $request->bindParam(':line1',$address->getLine1());
                 $request->bindParam(':line2',$address->getLine2());
                 $request->bindParam(':zipcode',$address->getZipCode());
@@ -120,12 +117,11 @@ class AddressService extends DataBaseConnection {
             if(!parent::getBdd()->inTransaction()){
                 parent::getBdd()->beginTransaction();
             }
-            $query = "UPDATE ADDRESS SET name = :name, line1 = :line1, line2 = :line2
+            $query = "UPDATE ADDRESS SET line1 = :line1, line2 = :line2
                       , zipcode = :zip, city = :city, latitude = :lat, longitude = :lon
                       WHERE id = :id";
             $request = parent::getBdd()->prepare($query);
             $request->bindParam(':id',$address->getId());
-            $request->bindParam(':name',$address->getName());
             $request->bindParam(':line1',$address->getLine1());
             $request->bindParam(':line2',$address->getLine2());
             $request->bindParam(':zipcode',$address->getZipCode());

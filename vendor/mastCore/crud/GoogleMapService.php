@@ -16,27 +16,30 @@ class GoogleMapService {
     }
 
     public function getLatLong(Address $address){
-        $adr ="";
-        $formatedAddress = "";
-        if($address->getLine1() != null){
-            $adr.=$address->getLine1()." , ";
-        }
-        if($address->getZipCode() != null){
-            $adr.=$address->getZipCode()." ";
-        }
-        if($address->getCity() != null){
-            $adr.=$address->getCity();
-        }
-        $formatedAddress = str_replace(" ","+",$adr);
+        try{
+            $adr ="";
+            if($address->getLine1() != null){
+                $adr.=$address->getLine1()." , ";
+            }
+            if($address->getZipCode() != null){
+                $adr.=$address->getZipCode()." ";
+            }
+            if($address->getCity() != null){
+                $adr.=$address->getCity();
+            }
+            $formatedAddress = str_replace(" ","+",$adr);
 
-        if($formatedAddress != "") {
-            $result = file_get_contents($this->url . "address=" . $formatedAddress);
-            $json = json_decode($result);
-            $lat = $json->{'results'}[0]->{'geometry'}->{'location'}->{'lat'};
-            $long = $json->{'results'}[0]->{'geometry'}->{'location'}->{'lng'};
+            if($formatedAddress != "") {
+                $result = file_get_contents($this->url . "address=" . $formatedAddress);
+                $json = json_decode($result);
+                $lat = $json->{'results'}[0]->{'geometry'}->{'location'}->{'lat'};
+                $long = $json->{'results'}[0]->{'geometry'}->{'location'}->{'lng'};
+                return [$lat, $long];
 
-            return [$lat, $long];
-
+            }
+            return [];
+        }catch(Exception $e){
+            error_log($e->getMessage());
         }
         return [];
     }

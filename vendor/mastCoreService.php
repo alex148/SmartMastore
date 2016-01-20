@@ -26,10 +26,13 @@ class MastCoreService {
             $dbContacts = $this->databaseService->getAllContacts();
             $exContacts = $this->exchangeService->getAllContacts();
 
-            if($exContacts == null){
+            if($exContacts == null && $dbContacts != null){
+                foreach($dbContacts as $contact){
+                    $this->exchangeService->addContact($contact);
+                }
                 return true;
             }
-            if($dbContacts == null){
+            if($dbContacts == null && $exContacts != null){
                 foreach($exContacts as $contact){
                     $this->databaseService->addContact($contact);
                 }

@@ -37,18 +37,24 @@ class TypeService extends DataBaseConnection{
         return [];
     }
 
-    public function getTypeByLabel($label){
+    public function getTypeIdByLabel($label){
         try{
             if(!parent::getBdd()->inTransaction()){
                 parent::getBdd()->beginTransaction();
             }
-            $query = "SELECT ID FROM TYPE WHERE LABEL like :label";
+
+            if(strlen($label)>1){
+              $label[0] = "%";
+              $label[strlen($label)] = "%";
+            }
+            $query = "SELECT * FROM TYPE WHERE LABEL LIKE :label";
             $request = parent::getBdd()->prepare($query);
-            $request->bindParam(':label',$label);
+            $request->bindValue(":label",$label, PDO::PARAM_STR);
             $request->execute();
+
             $typeData = $request->fetch();
-            if(isset($typeData[0])){
-                return $typeData[0];
+            if(isset($typeData['id'])){
+                return $typeData['id'];
             }
         }catch(Exception $e){
             error_log($e->getMessage());

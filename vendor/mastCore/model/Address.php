@@ -9,8 +9,6 @@ class Address implements \JsonSerializable{
 
     private $id;
 
-    private $name;
-
     private $line1;
 
     private $line2;
@@ -28,7 +26,6 @@ class Address implements \JsonSerializable{
     {
         return [
             'id' => $this->getId(),
-            'name' => $this->getName(),
             'line1' => $this->getLine1(),
             'line2'=> $this->getLine2(),
             'zipCode' => $this->getZipCode(),
@@ -39,8 +36,7 @@ class Address implements \JsonSerializable{
     }
 
     public function __construct(){
-        $this->id = 0;
-        $this->name = null;
+        $this->id = -1;
         $this->line1 = null;
         $this->line2 = null;
         $this->city = null;
@@ -63,22 +59,6 @@ class Address implements \JsonSerializable{
     public function setId($id)
     {
         $this->id = $id;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param mixed $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
     }
 
     /**

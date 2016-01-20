@@ -31,9 +31,9 @@ $app->get('/synchronization', function (\Slim\Http\Request $request,\Slim\Http\R
     try{
         $receivedKey = null;
 
-        if(!has_access($request)){
-            return access_denied($response);
-        }
+       // if(!has_access($request)){
+       //     return access_denied($response);
+       // }
 
         $mastCoreService = new MastCoreService();
         if($mastCoreService->synchronization()){
@@ -101,7 +101,22 @@ $app->post('/addContact', function (\Slim\Http\Request $request, \Slim\Http\Resp
 
 $app->put('/updateContact',function (\Slim\Http\Request $request, \Slim\Http\Response $response, $args) use ($app){
     try{
-        //todo
+        if(!has_access($request)){
+            return access_denied($response);
+        }
+        $requestData = $request->getBody()->getContents();
+        $data = json_decode($requestData,true);
+        $contact = contactParser($data);
+        if($contact->getId() == null || $contact->getId() == -1){
+            return error($response, 'UPADTE A CONTACT WITH NO ID IS NOT POSSIBLE');
+        }
+        $contactService = new ContactService();
+        if($contactService->updateContact($contact)){
+            return $response->write(json_encode('Update with success',true));
+        }else{
+            return error($response, 'ERROR DURING UPDATING IN DATABASE');
+        }
+        //todo update contact in exchange
     }catch(Exception $e){
         error_log($e->getMessage());
     }
@@ -110,7 +125,26 @@ $app->put('/updateContact',function (\Slim\Http\Request $request, \Slim\Http\Res
 
 $app->delete('/deleteContact',function (\Slim\Http\Request $request, \Slim\Http\Response $response, $args) use ($app){
     try{
-        //todo
+        if(!has_access($request)){
+            return access_denied($response);
+        }
+        $requestData = $request->getBody()->getContents();
+        $data = json_decode($requestData,true);
+        $contact = contactParser($data);
+        if($contact->getId() == null || $contact->getId() == -1){
+            return error($response, 'DELETE A CONTACT WITH NO ID IS NOT POSSIBLE');
+        }
+        $contactService = new ContactService();
+
+        if($contactService->deleteContact($contact)){
+            return $response->write(json_encode('Delete with success',true));
+        }else{
+            return error($response, 'ERROR DURING DELETING FROM DATABASE');
+        }
+
+
+        //todo delete contact from Exchange
+
     }catch(Exception $e){
         error_log($e->getMessage());
     }
@@ -119,11 +153,26 @@ $app->delete('/deleteContact',function (\Slim\Http\Request $request, \Slim\Http\
 
 $app->search('/searchContacts',function (\Slim\Http\Request $request, \Slim\Http\Response $response, $args) use ($app){
     try{
-        //todo
+         if(!has_access($request)){
+            return access_denied($response);
+        }
+
     }catch(Exception $e){
         error_log($e->getMessage());
     }
     return error($response, ' SEARCH CONTACT UNKNOWN ERROR');
+});
+
+$app->get('/test',function (\Slim\Http\Request $request, \Slim\Http\Response $response, $args) use ($app){
+    $contact = new Contact();
+    $contact->setFirstName('tt');
+    $contact->setName('yyy');
+    $contact->setPhone('0658745230');
+    $contact->setMail('tr@hotmail.fr');
+
+    $ex = new ExchangeService();
+    $ex->getTypeFromName('jean -- plombier');
+
 });
 
 function has_access(\Slim\Http\Request $request){
@@ -198,6 +247,9 @@ function contactParser($data){
             $type = new Type(0,$data['type']['name']);
             $contact->setType($type);
         }
+    }
+    if(isset($data['exchangeId'])){
+        $contact->setExchangeId($data['exchangeId']);
     }
     return $contact;
 }

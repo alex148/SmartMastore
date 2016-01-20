@@ -30,6 +30,7 @@ require_once 'php-ews/EWSType/PhoneNumberDictionaryType.php';
 require_once 'php-ews/NTLMSoapClient/Exchange.php';
 require_once 'mastCore/model/Address.php';
 require_once 'mastCore/model/Type.php';
+require_once 'mastCore/crud/TypeService.php';
 
 class ExchangeService extends ExchangeConnection{
 
@@ -59,16 +60,36 @@ class ExchangeService extends ExchangeConnection{
             $request->Traversal = EWSType_ItemQueryTraversalType::SHALLOW;
 
             $response = parent::getEws()->FindItem($request);
-            $stdContacts = $response->ResponseMessages->FindItemResponseMessage->RootFolder->Items->Contact;
-
+            if(isset($response->ResponseMessages->FindItemResponseMessage->RootFolder->Items->Contact)){
+               $stdContacts = $response->ResponseMessages->FindItemResponseMessage->RootFolder->Items->Contact;
+            }else{
+               return null;
+            }
             foreach ($stdContacts as $c){
                 $contact = new Contact();
+                if(isset($c->ItemId->Id)){
+                    $contact->setExchangeId($c->ItemId->Id);
+                }
                 if(isset($c->CompleteName)){
                     if(isset($c->CompleteName->FirstName)){
                         $contact->setFirstName($c->CompleteName->FirstName);
                     }
                     if(isset($c->CompleteName->LastName)){
-                        $contact->setName($c->CompleteName->LastName);
+                        if (strpos($c->CompleteName->LastName,'--') !== false) {
+                            $nameAndType = $this->getTypeFromName($c->CompleteName->LastName);
+                            if(sizeof($nameAndType) == 2){
+                                $contact->setName($nameAndType[0]);
+                                $typeService = new TypeService();
+                                $type = $typeService->getType($nameAndType[1]);
+                                if($type != null){
+                                    $contact->setType($type);
+                                }
+                            }else{
+                                $contact->setName($c->CompleteName->LastName);
+                            }
+                        }else{
+                            $contact->setName($c->CompleteName->LastName);
+                        }
                     }
                 }
                 if(isset($c->PhoneNumbers->Entry)){
@@ -92,12 +113,10 @@ class ExchangeService extends ExchangeConnection{
                     $address = new Address();
                     $stdAddress = $c->PhysicalAddresses->Entry;
                     if(is_array($stdAddress)){ //todo gerer multi adresse
-                        $address->setName($stdAddress[0]->Key);
                         $address->setLine1($stdAddress[0]->Street);
                         $address->setZipCode($stdAddress[0]->PostalCode);
                         $address->setCity($stdAddress[0]->City);
                     }else{
-                        $address->setName($stdAddress->Key);
                         if(isset($stdAddress->Street)){
                             $address->setLine1($stdAddress->Street);
                         }
@@ -110,7 +129,6 @@ class ExchangeService extends ExchangeConnection{
                     }
                     $contact->setAddress($address);
                 }
-                $contact->setType(null);    //todo gerer type
                 array_push($contactList,$contact);
             }
             if($contactList == []){
@@ -123,6 +141,35 @@ class ExchangeService extends ExchangeConnection{
         return null;
     }
 
+    function splitn($string, $needle, $offset)
+    {
+        $newString = $string;
+        $totalPos = 0;
+        $length = strlen($needle);
+        for($i = 0; $i < $offset; $i++)
+        {
+            $pos = strpos($newString, $needle);
+            if($pos === false)
+                return false;
+            $newString = substr($newString, $pos+$length);
+            $totalPos += $pos+$length;
+        }
+        return array(substr($string, 0, $totalPos-$length),substr($string, $totalPos));
+    }
+
+
+    public function getTypeFromName($name){
+        $typeService = new TypeService();
+        $nameAndType = $this->splitn($name,'--',sizeof($name));
+        if($nameAndType != false && sizeof($nameAndType) >=2){
+           $typeId = $typeService->getTypeIdByLabel($nameAndType[1]);
+            if($typeId != -1){
+                return [$nameAndType[0], $typeId];
+            }
+        }
+        return [];
+    }
+
     public function addContact(Contact $c){
         try{
             $request = new EWSType_CreateItemType();
@@ -131,11 +178,9 @@ class ExchangeService extends ExchangeConnection{
             if($c->getFirstName() != null){
                     $contact->GivenName = $c->getFirstName();
             }
-            if($c->getName()){
-                $contact->Surname = $c->getName();
-            }
             if($c->getType() != null){
-                $contact->Surname = $c->getName().' - '.$c->getType()->getLabel();
+                $contact->Surname = $c->getName().' -- '.$c->getType()->getLabel();
+
             }else{
                 $contact->Surname = $c->getName();
             }
@@ -146,6 +191,9 @@ class ExchangeService extends ExchangeConnection{
                 $email->_ = $c->getMail();
                 $contact->EmailAddresses = new EWSType_EmailAddressDictionaryType();
                 $contact->EmailAddresses->Entry[] = $email;
+            }
+            if($c->getCompany() != null){
+                $contact->CompanyName = $c->getCompany();
             }
             $addr = $c->getAddress();
             if($addr != null){
@@ -186,6 +234,9 @@ class ExchangeService extends ExchangeConnection{
             $request->Items->Contact[] = $contact;
 
             $result = parent::getEws()->CreateItem($request);
+            if($result->ResponseMessages->CreateItemResponseMessage->Items->Contact->ItemId->Id != null){
+                $c->setExchangeId($result->ResponseMessages->CreateItemResponseMessage->Items->Contact->ItemId->Id);
+            }
             return true;
         }catch(Exception $e){
             error_log($e->getMessage());

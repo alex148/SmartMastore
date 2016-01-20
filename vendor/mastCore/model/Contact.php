@@ -26,6 +26,8 @@ class Contact implements \JsonSerializable{
 
     private $type;
 
+    private $exchangeId;
+
     function jsonSerialize()
     {
         return [
@@ -36,13 +38,14 @@ class Contact implements \JsonSerializable{
             'phone' => $this->phone,
             'company' => $this->company,
             'address' => $this->address,
-            'type' => $this->type
+            'type' => $this->type,
+            'exchangeId' =>$this->exchangeId
         ];
     }
 
     function __construct()
     {
-        $this->id = 0;
+        $this->id = -1;
         $this->firstName = null;
         $this->name = null;
         $this->mail = null;
@@ -50,6 +53,7 @@ class Contact implements \JsonSerializable{
         $this->company = null;
         $this->address = null;
         $this->type = null;
+        $this->exchangeId = null;
     }
 
 
@@ -180,6 +184,23 @@ class Contact implements \JsonSerializable{
     {
         $this->type = $type;
     }
+
+    /**
+     * @return null
+     */
+    public function getExchangeId()
+    {
+        return $this->exchangeId;
+    }
+
+    /**
+     * @param null $exchangeId
+     */
+    public function setExchangeId($exchangeId)
+    {
+        $this->exchangeId = $exchangeId;
+    }
+
 
 
 }
