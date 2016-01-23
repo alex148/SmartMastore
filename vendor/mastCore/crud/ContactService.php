@@ -158,47 +158,61 @@ class ContactService extends DataBaseConnection {
             return false;
         }
         try{
-            if($contact->getAddress() != null && $contact->getAddress()->getId != null && $contact->getAddress()->getId() != -1){
+            if($contact->getAddress() != null && $contact->getAddress()->getId() != null && $contact->getAddress()->getId() != -1){
                 $this->addressService->updateAddress($contact->getAddress());
             }
-            if($contact->getType() != null && $contact->getType()->getId() != null && $contact->getType()->getId() != -1){
-                $this->typeService->updateType($contact->getType());
-            }
+
             if(!parent::getBdd()->inTransaction()){
                 parent::getBdd()->beginTransaction();
             }
-            if($contact->getAddress() != null && $contact->getAddress()->getId != null && $contact->getAddress()->getId() != -1 &&
-                $contact->getType() != null && $contact->getType()->getId() != null && $contact->getType()->getId() != -1){
-                $query = "UPDATE CONTACT SET firstName = :fName, name = :name, mail = :mail,
-                      phone = :phone, company = :company, address = :address, type = :type, exchangeId = :exchangeId
+            $query = "UPDATE CONTACT SET firstName = :fName, name = :name, mail = :mail,
+                      phone = :phone, company = :company, type = :type, exchangeId = :exchangeId
                       WHERE id = :id";
-            }elseif($contact->getAddress() != null && $contact->getAddress()->getId != null && $contact->getAddress()->getId() != -1){
-                $query = "UPDATE CONTACT SET firstName = :fName, name = :name, mail = :mail,
-                      phone = :phone, company = :company, address = :address, null, exchangeId = :exchangeId
-                      WHERE id = :id";
-            }elseif($contact->getType() != null && $contact->getType()->getId() != null && $contact->getType()->getId() != -1){
-                $query = "UPDATE CONTACT SET firstName = :fName, name = :name, mail = :mail,
-                      phone = :phone, company = :company, null, type = :type, exchangeId = :exchangeId
-                      WHERE id = :id";
-            }else{
-                $query = "UPDATE CONTACT SET firstName = :fName, name = :name, mail = :mail,
-                      phone = :phone, company = :company, exchangeId = :exchangeId
-                      WHERE id = :id";
-            }
             $request = parent::getBdd()->prepare($query);
             $request->bindParam(':id',$contact->getId());
-            $request->bindParam(':fName',$contact->getFirstName());
-            $request->bindParam(':name',$contact->getName());
-            $request->bindParam(':mail',$contact->getMail());
-            $request->bindParam(':phone',$contact->getPhone());
-            $request->bindParam(':company',$contact->getCompany());
-            if($contact->getAddress() != null && $contact->getAddress()->getId != null && $contact->getAddress()->getId() != -1){
-                $request->bindParam(':address',$contact->getAddress()->getId());
+            if($contact->getFirstName() != null){
+                $request->bindParam(':fName',$contact->getFirstName());
+            }else{
+                $request->bindValue(':fName',null);
             }
+            if($contact->getName() != null){
+                $request->bindParam(':name',$contact->getName());
+            }else{
+                $request->bindValue(':name',null);
+            }
+            if($contact->getMail() != null){
+                $request->bindParam(':mail',$contact->getMail());
+            }else{
+                $request->bindValue(':mail',null);
+            }
+            if($contact->getPhone() != null){
+                $request->bindParam(':phone',$contact->getPhone());
+            }else{
+                $request->bindValue(':phone',null);
+            }
+            if($contact->getCompany() != null){
+                $request->bindParam(':company',$contact->getCompany());
+            }else{
+                $request->bindValue(':company',null);
+            }
+
             if($contact->getType() != null && $contact->getType()->getId() != null && $contact->getType()->getId() != -1){
                 $request->bindParam(':type',$contact->getType()->getId());
+            }elseif($contact->getType() != null && ($contact->getType()->getId() == null || $contact->getType()->getId() == -1) && $contact->getType()->getLabel() !=null){
+                $typeId = $this->typeService->getTypeIdByLabel($contact->getType()->getLabel());
+                if($typeId != -1){
+                    $request->bindParam(':type',$typeId);
+                }else{
+                    $request->bindValue(':type',null);
+                }
+            }else{
+                $request->bindValue(':type',null);
             }
-            $request->bindParam(':exchangeId',$contact->getExchangeId());
+            if($contact->getExchangeId() != null){
+                $request->bindParam(':exchangeId',$contact->getExchangeId());
+            }else{
+                $request->bindValue(':exchangeId',null);
+            }
             $request->execute();
             parent::getBdd()->commit();
             $request->closeCursor();

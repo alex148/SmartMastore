@@ -28,6 +28,11 @@ require_once 'php-ews/EWSType/PhoneNumberKeyType.php';
 require_once 'php-ews/EWSType/FileAsMappingType.php';
 require_once 'php-ews/EWSType/PhoneNumberDictionaryType.php';
 require_once 'php-ews/NTLMSoapClient/Exchange.php';
+require_once 'php-ews/EWSType/DeleteItemType.php';
+require_once 'php-ews/EWSType/DisposalType.php';
+require_once 'php-ews/EWSType/CalendarItemCreateOrDeleteOperationType.php';
+require_once 'php-ews/EWSType/NonEmptyArrayOfBaseItemIdsType.php';
+require_once 'php-ews/EWSType/ItemIdType.php';
 require_once 'mastCore/model/Address.php';
 require_once 'mastCore/model/Type.php';
 require_once 'mastCore/crud/TypeService.php';
@@ -43,7 +48,7 @@ class ExchangeService extends ExchangeConnection{
      * Used to get all the contacts from Exchange
      * @return array of contact
      */
-    public function getAllContacts(){   //todo gerer type
+    public function getAllContacts(){
         try{
             $contactList = [];
             $request = new EWSType_FindItemType();
@@ -83,6 +88,8 @@ class ExchangeService extends ExchangeConnection{
                                 $type = $typeService->getType($nameAndType[1]);
                                 if($type != null){
                                     $contact->setType($type);
+                                }else{
+                                    $contact->setType(null);
                                 }
                             }else{
                                 $contact->setName($c->CompleteName->LastName);
@@ -93,14 +100,14 @@ class ExchangeService extends ExchangeConnection{
                     }
                 }
                 if(isset($c->PhoneNumbers->Entry)){
-                    if( is_array($c->PhoneNumbers->Entry)){ //todo gerer multi phone
+                    if( is_array($c->PhoneNumbers->Entry)){
                         $contact->setPhone($c->PhoneNumbers->Entry[0]->_);
                     }else{
                         $contact->setPhone($c->PhoneNumbers->Entry->_);
                     }
                 }
                 if(isset($c->EmailAddresses->Entry)){
-                    if( is_array($c->EmailAddresses->Entry)){   //todo gerer multi mail
+                    if( is_array($c->EmailAddresses->Entry)){
                         $contact->setMail($c->EmailAddresses->Entry[0]->_);
                     }else{
                         $contact->setMail($c->EmailAddresses->Entry->_);
@@ -112,7 +119,7 @@ class ExchangeService extends ExchangeConnection{
                 if(isset($c->PhysicalAddresses->Entry)){
                     $address = new Address();
                     $stdAddress = $c->PhysicalAddresses->Entry;
-                    if(is_array($stdAddress)){ //todo gerer multi adresse
+                    if(is_array($stdAddress)){
                         $address->setLine1($stdAddress[0]->Street);
                         $address->setZipCode($stdAddress[0]->PostalCode);
                         $address->setCity($stdAddress[0]->City);
@@ -242,5 +249,36 @@ class ExchangeService extends ExchangeConnection{
             error_log($e->getMessage());
         }
         return false;
+    }
+
+    public function deleteContact(Contact $c){
+        try{
+            if($c->getExchangeId() == null || $c->getExchangeId() == -1 || $c->getExchangeId() == ""){
+                return false;
+            }
+
+            $event_id = $c->getExchangeId();
+
+            $request = new EWSType_DeleteItemType();
+            $request->DeleteType = EWSType_DisposalType::HARD_DELETE;
+            $request->SendMeetingCancellations = EWSType_CalendarItemCreateOrDeleteOperationType::SEND_TO_NONE;
+
+            $item = new EWSType_ItemIdType();
+            $item->Id = $event_id;
+
+            $items = new EWSType_NonEmptyArrayOfBaseItemIdsType();
+            $items->ItemId = $item;
+            $request->ItemIds = $items;
+
+            $response = $this->getEws()->DeleteItem($request);
+            print_r($response);
+            if(strcmp($response->ResponseMessages->DeleteItemResponseMessage->ResponseClass,"Success") == 0){
+                return true;
+            }else{
+                return false;
+            }
+        }catch (Exception $e){
+            error_log($e->getMessage());
+        }
     }
 }

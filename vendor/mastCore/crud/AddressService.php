@@ -118,16 +118,39 @@ class AddressService extends DataBaseConnection {
                 parent::getBdd()->beginTransaction();
             }
             $query = "UPDATE ADDRESS SET line1 = :line1, line2 = :line2
-                      , zipcode = :zip, city = :city, latitude = :lat, longitude = :lon
+                      , zipcode = :zip, city = :city, latitude = :lat, longitude = :long
                       WHERE id = :id";
             $request = parent::getBdd()->prepare($query);
             $request->bindParam(':id',$address->getId());
-            $request->bindParam(':line1',$address->getLine1());
-            $request->bindParam(':line2',$address->getLine2());
-            $request->bindParam(':zipcode',$address->getZipCode());
-            $request->bindParam(':city',$address->getCity());
-            $request->bindParam(':lat', $address->getLatitude());
-            $request->bindParam(':long', $address->getLongitude());
+            if($address->getLine1() != null){
+                $request->bindParam(':line1',$address->getLine1());
+            }else{
+                $request->bindValue(':line1',null);
+            }
+            if($address->getLine2() != null){
+                $request->bindParam(':line2',$address->getLine2());
+            }else{
+                $request->bindValue(':line2',null);
+            }
+            if($address->getZipCode() != null){
+                $request->bindParam(':zip',$address->getZipCode());
+            }else{
+                $request->bindValue(':zip',null);
+            }
+            if($address->getCity() != null){
+                $request->bindParam(':city',$address->getCity());
+            }else{
+                $request->bindValue(':city',null);
+            }
+            $latLong = $this->googleMapService->getLatLong($address);
+            if(sizeof($latLong) == 2){
+                $request->bindParam(':lat', $latLong[0]);
+                $request->bindParam(':long', $latLong[1]);
+
+            }else{
+                $request->bindValue(':lat', null);
+                $request->bindValue(':long', null);
+            }
             $request->execute();
             parent::getBdd()->commit();
             $request->closeCursor();

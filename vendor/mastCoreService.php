@@ -68,6 +68,10 @@ class MastCoreService {
                     if(!$this->exchangeService->addContact($dbContact)){
                         error_log("Contact creation from database to Exchange error. Contact [".$dbContact->getFirstName()." ".$dbContact->getName()." ]");
                         $error = true;
+                    }else{
+                        if($dbContact->getExchangeId() != null){
+                            $this->databaseService->updateContact($dbContact);
+                        }
                     }
                 }
             }

@@ -29,11 +29,9 @@ $_SERVER['key'] = '72c5e00cb6c620fa3a8d4277cb84d83c58dea23be4b931dfad9eeff59d5bc
 
 $app->get('/synchronization', function (\Slim\Http\Request $request,\Slim\Http\Response $response, $args) use ($app) {
     try{
-        $receivedKey = null;
-
-       // if(!has_access($request)){
-       //     return access_denied($response);
-       // }
+        if(!has_access($request)){
+            return access_denied($response);
+        }
 
         $mastCoreService = new MastCoreService();
         if($mastCoreService->synchronization()){
@@ -46,7 +44,7 @@ $app->get('/synchronization', function (\Slim\Http\Request $request,\Slim\Http\R
     }
     return error($response, 'SYNCHRONISATION ERROR');
 
-}); //todo improvable
+});
 
 $app->get('/getAllContacts', function (\Slim\Http\Request $request, \Slim\Http\Response $response, $args) use ($app) {
     try{
@@ -108,22 +106,33 @@ $app->put('/updateContact',function (\Slim\Http\Request $request, \Slim\Http\Res
         $data = json_decode($requestData,true);
         $contact = contactParser($data);
         if($contact->getId() == null || $contact->getId() == -1){
-            return error($response, 'UPADTE A CONTACT WITH NO ID IS NOT POSSIBLE');
+            return error($response, 'UPDATE A CONTACT WITH NO ID IS NOT POSSIBLE');
+        }
+        if($contact->getExchangeId() == null || $contact->getExchangeId() == -1 || $contact->getExchangeId() == ""){
+            return error($response, 'UPDATE A CONTACT WITH NO EXCHANGE ID IS NOT POSSIBLE');
         }
         $contactService = new ContactService();
-        if($contactService->updateContact($contact)){
-            return $response->write(json_encode('Update with success',true));
-        }else{
+        $exchangeService = new ExchangeService();
+
+        $deletedFromExchange = $exchangeService->deleteContact($contact);
+        if(!$deletedFromExchange){
+            return error($response, 'ERROR DURING UPDATING IN EXCHANGE');
+        }
+        if(!$exchangeService->addContact($contact)){
+            return error($response, 'ERROR DURING UPDATING IN EXCHANGE');
+        }
+
+        if(!$contactService->updateContact($contact)){
             return error($response, 'ERROR DURING UPDATING IN DATABASE');
         }
-        //todo update contact in exchange
+        return $response->write(json_encode("ok",true));
     }catch(Exception $e){
         error_log($e->getMessage());
     }
     return error($response, ' UPDATE CONTACT UNKNOWN ERROR');
 });
 
-$app->delete('/deleteContact',function (\Slim\Http\Request $request, \Slim\Http\Response $response, $args) use ($app){
+$app->post('/deleteContact',function (\Slim\Http\Request $request, \Slim\Http\Response $response, $args) use ($app){
     try{
         if(!has_access($request)){
             return access_denied($response);
@@ -134,17 +143,20 @@ $app->delete('/deleteContact',function (\Slim\Http\Request $request, \Slim\Http\
         if($contact->getId() == null || $contact->getId() == -1){
             return error($response, 'DELETE A CONTACT WITH NO ID IS NOT POSSIBLE');
         }
+        if($contact->getExchangeId() == null || $contact->getExchangeId() == -1 || $contact->getExchangeId() == ""){
+            return error($response, 'DELETE A CONTACT WITH NO EXCHANGE ID IS NOT POSSIBLE');
+        }
         $contactService = new ContactService();
+        $exchangeService = new ExchangeService();
 
-        if($contactService->deleteContact($contact)){
-            return $response->write(json_encode('Delete with success',true));
-        }else{
+        if(!$contactService->deleteContact($contact)){
             return error($response, 'ERROR DURING DELETING FROM DATABASE');
         }
+        if(!$exchangeService->deleteContact($contact)){
+            return error($response, 'ERROR DURING DELETING FROM EXCHANGE');
+        }
 
-
-        //todo delete contact from Exchange
-
+        return $response->write(json_encode('Delete with success',true));
     }catch(Exception $e){
         error_log($e->getMessage());
     }
@@ -169,9 +181,10 @@ $app->get('/test',function (\Slim\Http\Request $request, \Slim\Http\Response $re
     $contact->setName('yyy');
     $contact->setPhone('0658745230');
     $contact->setMail('tr@hotmail.fr');
-
+    $contact->setExchangeId("AAAPAFRvdG9Ac2l0YWxpYS5mcgBGAAAAAADUeCkQ3EMJTKBA3gJNfi4uBwAxDqrT2rrGSrf1tQt3lJQmAAAAAAEOAAAxDqrT2rrGSrf1tQt3lJQmAAAAABMsAAA=");
     $ex = new ExchangeService();
-    $ex->getTypeFromName('jean -- plombier');
+    $cc = $ex->deleteContact($contact);
+
 
 });
 
@@ -222,6 +235,9 @@ function contactParser($data){
     if(isset($data['address'])){
         $dataAddress = $data['address'];
         $address = new Address();
+        if(isset($dataAddress['id'])){
+            $address->setId($dataAddress['id']);
+        }
         if(isset($dataAddress['line1'])){
             $address->setLine1($dataAddress['line1']);
         }
@@ -234,19 +250,29 @@ function contactParser($data){
         if(isset($dataAddress['city'])){
             $address->setCity($dataAddress['city']);
         }
-        $mapService = new GoogleMapService();
-        $latlng = $mapService->getLatLong($address);
-        if($latlng != [] && sizeof($latlng) == 2){
-            $address->setLatitude($latlng[0]);
-            $address->setLongitude($latlng[1]);
+        if(isset($dataAddress['latitude']) && isset($dataAddress['longitude'])) {
+            $address->setCity($dataAddress['latitude']);
+            $address->setCity($dataAddress['longitude']);
+        }else{
+            $mapService = new GoogleMapService();
+            $latlng = $mapService->getLatLong($address);
+            if($latlng != [] && sizeof($latlng) == 2){
+                $address->setLatitude($latlng[0]);
+                $address->setLongitude($latlng[1]);
+            }
         }
+
         $contact->setAddress($address);
     }
     if(isset($data['type'])){
-        if(isset($data['type']['name'])){
-            $type = new Type(0,$data['type']['name']);
-            $contact->setType($type);
+        if(isset($data['type']['id']) && isset($data['type']['name'])){
+            $type = new Type($data['type']['id'],$data['type']['name']);
+        }elseif(isset($data['type']['name'])){
+            $type = new Type(null,$data['type']['name']);
+        }else{
+            $type = null;
         }
+            $contact->setType($type);
     }
     if(isset($data['exchangeId'])){
         $contact->setExchangeId($data['exchangeId']);

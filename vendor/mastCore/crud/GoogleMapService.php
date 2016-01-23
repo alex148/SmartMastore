@@ -27,9 +27,10 @@ class GoogleMapService {
             if($address->getCity() != null){
                 $adr.=$address->getCity();
             }
+            $adr.=" FRANCE";
             $formatedAddress = str_replace(" ","+",$adr);
 
-            if($formatedAddress != "") {
+            if($formatedAddress != "+FRANCE") {
                 $result = file_get_contents($this->url . "address=" . $formatedAddress);
                 $json = json_decode($result);
                 $lat = $json->{'results'}[0]->{'geometry'}->{'location'}->{'lat'};
