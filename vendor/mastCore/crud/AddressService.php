@@ -181,5 +181,42 @@ class AddressService extends DataBaseConnection {
         }
         return false;
     }
+
+
+    public function getAddressesByRayon($address, $rayon){
+        $list = [];
+        try {
+            if (!parent::getBdd()->inTransaction()) {
+                parent::getBdd()->beginTransaction();
+            }
+            $query = "SELECT *, ( 6371 * acos( cos( radians(:latitude) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(:longitude) )
+              + sin( radians(:latitude) ) * sin( radians( latitude ) ) ) ) AS distance FROM address HAVING distance < :rayon ORDER BY distance LIMIT 0 , 150;";
+            $request = parent::getBdd()->prepare($query);
+            $request->bindParam(':latitude', $address->getLatitude());
+            $request->bindParam(':longitude', $address->getLongitude());
+            $request->bindParam(':rayon', $rayon);
+            $request->execute();
+
+            while ($data = $request->fetch()) {
+                $address = new Address();
+                $address->setId($data['id']);
+                $address->setLine1($data['line1']);
+                $address->setLine2($data['line2']);
+                $address->setZipCode($data['zipcode']);
+                $address->setCity($data['city']);
+                $address->setLatitude($data['latitude']);
+                $address->setLongitude($data['longitude']);
+                array_push($list,$address);
+            }
+            if($list == []){
+                return null;
+            }
+            return $list;
+
+        }catch(Exception $e){
+            error_log($e->getMessage());
+        }
+        return null;
+    }
     
 }

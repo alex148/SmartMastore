@@ -9,6 +9,7 @@ require 'vendor/autoload.php';
 require_once 'vendor/mastCore/model/Address.php';
 require_once 'vendor/mastCore/model/Contact.php';
 require_once 'vendor/mastCore/model/Type.php';
+require_once 'vendor/mastCore/model/SearchObject.php';
 require_once 'vendor/mastCore/crud/AddressService.php';
 require_once 'vendor/mastCore/crud/ContactService.php';
 require_once 'vendor/mastCore/crud/TypeService.php';
@@ -163,12 +164,19 @@ $app->post('/deleteContact',function (\Slim\Http\Request $request, \Slim\Http\Re
     return error($response, ' DELETE CONTACT UNKNOWN ERROR');
 });
 
-$app->search('/searchContacts',function (\Slim\Http\Request $request, \Slim\Http\Response $response, $args) use ($app){
+$app->post('/searchContacts',function (\Slim\Http\Request $request, \Slim\Http\Response $response, $args) use ($app){
     try{
          if(!has_access($request)){
             return access_denied($response);
         }
-
+        $requestData = $request->getBody()->getContents();
+        $data = json_decode($requestData,true);
+        $searchObject = searchObjectParser($data);
+        $contactService = new ContactService();
+        $result = $contactService->searchContacts($searchObject);
+        if($result != null){
+            return $response->write(json_encode($result,true));
+        }
     }catch(Exception $e){
         error_log($e->getMessage());
     }
@@ -212,6 +220,57 @@ function error(\Slim\Http\Response $response, $message){
         ->write('SERVER ERROR. PLEASE CONTACT YOUR ADMINISTRATOR. ERROR TYPE : '.$message);
 }
 
+
+function searchObjectParser($data){
+    $searchObject = new SearchObject();
+    if(isset($data['firstName'])){
+        $searchObject->setFirstName($data['firstName']);
+    }
+    if(isset($data['name'])){
+        $searchObject->setName($data['name']);
+    }
+    if(isset($data['company'])){
+        $searchObject->setCompany($data['company']);
+    }
+
+    if(isset($data['address'])) {
+        $dataAddress = $data['address'];
+        $address = new Address();
+        if (isset($dataAddress['line1'])) {
+            $address->setLine1($dataAddress['line1']);
+        }
+        if (isset($dataAddress['line2'])) {
+            $address->setLine2($dataAddress['line2']);
+        }
+        if (isset($dataAddress['zipCode'])) {
+            $address->setZipCode($dataAddress['zipCode']);
+        }
+        if (isset($dataAddress['city'])) {
+            $address->setCity($dataAddress['city']);
+        }
+        if (isset($dataAddress['latitude']) && isset($dataAddress['longitude'])) {
+            $address->setLatitude($dataAddress['latitude']);
+            $address->setLongitude($dataAddress['longitude']);
+        } else {
+            $mapService = new GoogleMapService();
+            $latlng = $mapService->getLatLong($address);
+            if ($latlng != [] && sizeof($latlng) == 2) {
+                $address->setLatitude($latlng[0]);
+                $address->setLongitude($latlng[1]);
+            }
+        }
+        $searchObject->setAddress($address);
+    }
+    if(isset($data['typeName'])){
+        $searchObject->setTypeName($data['typeName']);
+    }
+
+    if(isset($data['rayon'])){
+        $searchObject->setRayon($data['rayon']);
+    }
+    return $searchObject;
+}
+
 function contactParser($data){
     $contact = new Contact();
     if(isset($data['id'])){
@@ -251,8 +310,8 @@ function contactParser($data){
             $address->setCity($dataAddress['city']);
         }
         if(isset($dataAddress['latitude']) && isset($dataAddress['longitude'])) {
-            $address->setCity($dataAddress['latitude']);
-            $address->setCity($dataAddress['longitude']);
+            $address->setLatitude($dataAddress['latitude']);
+            $address->setLongitude($dataAddress['longitude']);
         }else{
             $mapService = new GoogleMapService();
             $latlng = $mapService->getLatLong($address);

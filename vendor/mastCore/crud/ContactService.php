@@ -247,6 +247,247 @@ class ContactService extends DataBaseConnection {
         return false;
     }
 
+    public function parseContact($data){
+        $contact = new Contact();
+        if(isset($data['id'])){
+            $contact->setId($data['id']);
+        }
+        if(isset($data['firstName'])){
+            $contact->setFirstName($data['firstName']);
+        }
+        if(isset($data['name'])){
+            $contact->setName($data['name']);
+        }
+        if(isset($data['mail'])){
+            $contact->setMail($data['mail']);
+        }
+        if(isset($data['company'])){
+            $contact->setCompany($data['company']);
+        }
+        if(isset($data['phone'])){
+            $contact->setPhone($data['phone']);
+        }
+        if (isset($data['address'])) {
+            $contact->setAddress($this->addressService->getAddress($data['address']));
+        }
+        if (isset($data['type'])) {
+            $contact->setType($this->typeService->getType($data['type']));
+        }
+        if (isset($data['exchangeId'])) {
+            $contact->setExchangeId($data['exchangeId']);
+        }
+        return $contact;
+    }
+
+    public function getContactByCompany($company){
+        if($company == null){
+            return null;
+        }
+        $list = [];
+        try {
+            if (!parent::getBdd()->inTransaction()) {
+                parent::getBdd()->beginTransaction();
+            }
+            $query = "SELECT * FROM CONTACT WHERE company like :company";
+            $request = parent::getBdd()->prepare($query);
+            $company = '%'.$company.'%';
+            $request->bindParam(':company', $company);
+            $request->execute();
+            while ($data = $request->fetch()) {
+                $contact = $this->parseContact($data);
+                array_push($list, $contact);
+            }
+            if($list == []){
+                return null;
+            }
+            return $list;
+        }catch(Exception $e){
+            error_log($e->getMessage());
+        }
+        return null;
+    }
+
+    public function getContactByTypeId($typeId){
+        $list = [];
+        try {
+            if (!parent::getBdd()->inTransaction()) {
+                parent::getBdd()->beginTransaction();
+            }
+            $query = "SELECT * FROM CONTACT WHERE type = :type";
+            $request = parent::getBdd()->prepare($query);
+            $request->bindParam(':type', $typeId);
+            $request->execute();
+            while ($data = $request->fetch()) {
+                $contact = $this->parseContact($data);
+                array_push($list, $contact);
+            }
+            if($list == []){
+                return null;
+            }
+            return $list;
+        }catch(Exception $e){
+            error_log($e->getMessage());
+        }
+        return null;
+    }
+
+    public function getContactsbyAddressAndRayon($address, $rayon, $typeId, $company){
+        $addressIds = [];
+        $list = [];
+        try{
+            $addresses = $this->addressService->getAddressesByRayon($address,$rayon);
+            if($addresses == []){
+                return null;
+            }
+            foreach($addresses as $data){
+                array_push($addressIds,$data->getId());
+            }
+            if (!parent::getBdd()->inTransaction()) {
+                parent::getBdd()->beginTransaction();
+            }
+            $formatedIds = '';
+            $i = 0;
+            foreach($addressIds as $id){
+                if($i < (count($addressIds)-1)){
+                    $formatedIds = $formatedIds.$id.', ';
+                }else{
+                    $formatedIds = $formatedIds.$id;
+                }
+                $i++;
+            }
+            $query = "";
+            if($typeId == null && $company == null){
+                $query = "SELECT * FROM CONTACT where address in (".$formatedIds.")";
+            }elseif($typeId != null && $company == null) {
+                $query = "SELECT * FROM CONTACT where address in (".$formatedIds.") and type = ".$typeId;
+            }elseif($typeId == null && $company != null){
+                $query = "SELECT * FROM CONTACT where address in (".$formatedIds.") and company = ".$company;
+            }
+            echo $query;
+            $response = parent::getBdd()->query($query);
+            while ($data = $response->fetch()) {
+                $contact = $this->parseContact($data);
+                array_push($list, $contact);
+            }
+            if($list == []){
+                return null;
+            }
+            return $list;
+        }catch(Exception $e){
+            error_log($e->getMessage());
+        }
+        return null;
+    }
+
+    public function getContactByName($firstName, $name){
+        if($name == null){
+            return null;
+        }
+        $list = [];
+        try{
+            if(!parent::getBdd()->inTransaction()){
+                parent::getBdd()->beginTransaction();
+            }
+            if($firstName != null){
+                $query = "SELECT * FROM CONTACT WHERE firstName like :firstName and name like :name";
+            }else{
+                $query = "SELECT * FROM CONTACT WHERE name like :name";
+            }
+            $request = parent::getBdd()->prepare($query);
+            if($firstName != null){
+                $firstName = '%'.$firstName.'%';
+                $request->bindParam(':firstName', $firstName);
+            }
+            $name = '%'.$name.'%';
+            $request->bindParam(':name', $name);
+            $request->execute();
+            while ($data = $request->fetch()) {
+                $contact = $this->parseContact($data);
+                array_push($list, $contact);
+            }
+            $request->closeCursor();
+            if ($list == []) {
+                return null;
+            }
+            return $list;
+        }catch(Exception $e){
+            error_log($e->getMessage());
+        }
+        return null;
+    }
+
+    public function searchContacts(SearchObject $search){
+        if($search == null ){
+            return null;
+        }
+        //search contact by name
+        if($search->getName() != null){
+            if($search->getFirstName() != null){
+                $result = $this->getContactByName($search->getFirstName(), $search->getName());
+            }else{
+                echo $search->getFirstName();
+                $result = $this->getContactByName(null, $search->getName());
+            }
+            if($result == []){
+                return null;
+            }
+            return $result;
+        }
+
+        //get contact by company
+        if($search->getCompany() != null){
+            $result = $this->getContactByCompany($search->getCompany());
+            if($result == []){
+                return null;
+            }
+            return $result;
+        }
+
+        //search by Type
+        if($search->getTypeName() != null && $search->getAddress() == null){
+            $typeId = $this->typeService->getTypeIdByLabel($search->getTypeName());
+            if($typeId != null && $typeId != -1){
+                $result = $this->getContactByTypeId($typeId);
+                if($result == []){
+                    return null;
+                }
+                return $result;
+            }
+        }
+
+        //search by address + rayon
+        if($search->getAddress() != null && $search->getAddress()->getLatitude() != null &&
+            $search->getAddress()->getLongitude() != null && $search->getRayon() != null && $search->getTypeName() == null){
+            $result = $this->getContactsbyAddressAndRayon($search->getAddress(), $search->getRayon(),null,null);
+            if($result == []){
+                return null;
+            }
+            return $result;
+        }
+        //search by type + address + rayon
+        if($search->getAddress() != null && $search->getAddress()->getLatitude() != null &&
+            $search->getAddress()->getLongitude() != null && $search->getRayon() != null && $search->getTypeName() != null){
+            $typeId = $this->typeService->getTypeIdByLabel($search->getTypeName());
+            if($typeId != null && $typeId != -1){
+                $result = $this->getContactsbyAddressAndRayon($search->getAddress(), $search->getRayon(),$typeId,null);
+                if($result == []){
+                    return null;
+                }
+                return $result;
+            }
+        }
+        //search by company + address + rayon
+        if($search->getAddress() != null && $search->getAddress()->getLatitude() != null &&
+            $search->getAddress()->getLongitude() != null && $search->getRayon() != null && $search->getCompany() != null){
+            $result = $this->getContactsbyAddressAndRayon($search->getAddress(), $search->getRayon(),null, $search->getCompany());
+            if($result == []){
+                return null;
+            }
+            return $result;
+        }
+        return null;
+    }
+
 
     
 }

@@ -43,10 +43,7 @@ class TypeService extends DataBaseConnection{
                 parent::getBdd()->beginTransaction();
             }
 
-            if(strlen($label)>1){
-              $label[0] = "%";
-              $label[strlen($label)] = "%";
-            }
+            $label = '%'.$label.'%';
             $query = "SELECT * FROM TYPE WHERE LABEL LIKE :label";
             $request = parent::getBdd()->prepare($query);
             $request->bindValue(":label",$label, PDO::PARAM_STR);
