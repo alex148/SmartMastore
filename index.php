@@ -47,6 +47,22 @@ $app->get('/synchronization', function (\Slim\Http\Request $request,\Slim\Http\R
 
 });
 
+$app->get('/getAllTypes', function (\Slim\Http\Request $request,\Slim\Http\Response $response, $args) use ($app) {
+    try{
+        if(!has_access($request)){
+            return access_denied($response);
+        }
+        $typeServices = new TypeService();
+        $types = $typeServices->getAllTypes();
+        if($types != []){
+            return $response->write(json_encode($types,true));
+        }
+    }catch(Exception $e){
+        error_log($e->getMessage());
+    }
+    return error($response, 'GETALLTYPES ERROR');
+});
+
 $app->get('/getAllContacts', function (\Slim\Http\Request $request, \Slim\Http\Response $response, $args) use ($app) {
     try{
 
@@ -211,13 +227,13 @@ function has_access(\Slim\Http\Request $request){
 function access_denied(\Slim\Http\Response $response){
     return $response->withStatus(403)
         ->withHeader('Content-Type', 'text/html')
-        ->write('ACCESS DENIED !');
+        ->write('{ error: "ACCESS DENIED !"}');
 }
 
 function error(\Slim\Http\Response $response, $message){
     return $response->withStatus(503)
         ->withHeader('Content-Type', 'text/html')
-        ->write('SERVER ERROR. PLEASE CONTACT YOUR ADMINISTRATOR. ERROR TYPE : '.$message);
+        ->write('{ error : "SERVER ERROR. PLEASE CONTACT YOUR ADMINISTRATOR. ERROR TYPE : '.$message.'"}');
 }
 
 
