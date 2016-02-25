@@ -102,6 +102,16 @@ class ExchangeService extends ExchangeConnection{
                 if(isset($c->PhoneNumbers->Entry)){
                     if( is_array($c->PhoneNumbers->Entry)){
                         $contact->setPhone($c->PhoneNumbers->Entry[0]->_);
+                        if(sizeof($c->PhoneNumbers->Entry) > 1) {
+                            if (isset($c->PhoneNumbers->Entry[1])) {
+                                $contact->setPhone2($c->PhoneNumbers->Entry[1]->_);
+                            }
+                        }
+                        if(sizeof($c->PhoneNumbers->Entry) > 2) {
+                            if(isset($c->PhoneNumbers->Entry[2])){
+                                $contact->setPhone3($c->PhoneNumbers->Entry[2]->_);
+                            }
+                        }
                     }else{
                         $contact->setPhone($c->PhoneNumbers->Entry->_);
                     }
@@ -231,7 +241,27 @@ class ExchangeService extends ExchangeConnection{
                 $phone->Key = new EWSType_PhoneNumberKeyType();
                 $phone->Key->_ = EWSType_PhoneNumberKeyType::BUSINESS_PHONE;
                 $phone->_ = $c->getPhone();
-                $contact->PhoneNumbers = new EWSType_PhoneNumberDictionaryType();
+
+                $contact->PhoneNumbers->Entry[] = $phone;
+            }
+            if($c->getPhone2() != null){
+                $phone = new EWSType_PhoneNumberDictionaryEntryType();
+                $phone->Key = new EWSType_PhoneNumberKeyType();
+                $phone->Key->_ = EWSType_PhoneNumberKeyType::BUSINESS_PHONE_2;
+                $phone->_ = $c->getPhone2();
+                if($contact->PhoneNumbers == null){
+                    $contact->PhoneNumbers = new EWSType_PhoneNumberDictionaryType();
+                }
+                $contact->PhoneNumbers->Entry[] = $phone;
+            }
+            if($c->getPhone3() != null){
+                $phone = new EWSType_PhoneNumberDictionaryEntryType();
+                $phone->Key = new EWSType_PhoneNumberKeyType();
+                $phone->Key->_ = EWSType_PhoneNumberKeyType::OTHER_PHONE;
+                $phone->_ = $c->getPhone3();
+                if($contact->PhoneNumbers == null){
+                    $contact->PhoneNumbers = new EWSType_PhoneNumberDictionaryType();
+                }
                 $contact->PhoneNumbers->Entry[] = $phone;
             }
 

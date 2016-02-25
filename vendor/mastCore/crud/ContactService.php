@@ -47,6 +47,12 @@ class ContactService extends DataBaseConnection {
                 if(isset($data['phone'])){
                     $contact->setPhone($data['phone']);
                 }
+                if(isset($data['phone2'])){
+                    $contact->setPhone2($data['phone2']);
+                }
+                if(isset($data['phone3'])){
+                    $contact->setPhone3($data['phone3']);
+                }
                 if (isset($data['address'])) {
                     $contact->setAddress($this->addressService->getAddress($data['address']));
                 }
@@ -68,11 +74,7 @@ class ContactService extends DataBaseConnection {
         }
         return [];
     }
-    
-    public function getContact($id){
-        
-    }
-    
+
     public function addContact(Contact $contact)
     {
         try{
@@ -99,7 +101,7 @@ class ContactService extends DataBaseConnection {
                 parent::getBdd()->beginTransaction();
             }
 
-            $query = "INSERT INTO CONTACT VALUES(null,:fName, :name, :mail, :phone, :company, :addrId, :typeId, :exchangeId)";
+            $query = "INSERT INTO CONTACT VALUES(null,:fName, :name, :mail, :phone, :phone2, :phone3, :company, :addrId, :typeId, :exchangeId)";
             $request = parent::getBdd()->prepare($query);
             if($contact->getFirstName() != null){
                 $request->bindParam(':fName',$contact->getFirstName());
@@ -120,6 +122,16 @@ class ContactService extends DataBaseConnection {
                 $request->bindParam(':phone',$contact->getPhone());
             }else{
                 $request->bindValue(':phone',null);
+            }
+            if($contact->getPhone2() != null){
+                $request->bindParam(':phone2',$contact->getPhone2());
+            }else{
+                $request->bindValue(':phone2',null);
+            }
+            if($contact->getPhone3() != null){
+                $request->bindParam(':phone3',$contact->getPhone3());
+            }else{
+                $request->bindValue(':phone3',null);
             }
             if($contact->getCompany() != null){
                 $request->bindParam(':company',$contact->getCompany());
@@ -166,7 +178,7 @@ class ContactService extends DataBaseConnection {
                 parent::getBdd()->beginTransaction();
             }
             $query = "UPDATE CONTACT SET firstName = :fName, name = :name, mail = :mail,
-                      phone = :phone, company = :company, type = :type, exchangeId = :exchangeId
+                      phone = :phone, phone2 = :phone2, phone3 = :phone3, company = :company, type = :type, exchangeId = :exchangeId
                       WHERE id = :id";
             $request = parent::getBdd()->prepare($query);
             $request->bindParam(':id',$contact->getId());
@@ -189,6 +201,16 @@ class ContactService extends DataBaseConnection {
                 $request->bindParam(':phone',$contact->getPhone());
             }else{
                 $request->bindValue(':phone',null);
+            }
+            if($contact->getPhone2() != null){
+                $request->bindParam(':phone2',$contact->getPhone2());
+            }else{
+                $request->bindValue(':phone2',null);
+            }
+            if($contact->getPhone3() != null){
+                $request->bindParam(':phone3',$contact->getPhone3());
+            }else{
+                $request->bindValue(':phone3',null);
             }
             if($contact->getCompany() != null){
                 $request->bindParam(':company',$contact->getCompany());
@@ -266,6 +288,12 @@ class ContactService extends DataBaseConnection {
         }
         if(isset($data['phone'])){
             $contact->setPhone($data['phone']);
+        }
+        if(isset($data['phone2'])){
+            $contact->setPhone2($data['phone2']);
+        }
+        if(isset($data['phone3'])){
+            $contact->setPhone3($data['phone3']);
         }
         if (isset($data['address'])) {
             $contact->setAddress($this->addressService->getAddress($data['address']));

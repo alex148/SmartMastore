@@ -2,6 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d780f7ac-e6d1-45b9-9687-9da0f827c585" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/mastCore/model/Contact.php" afterPath="$PROJECT_DIR$/vendor/mastCore/model/Contact.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/mastCore/crud/ContactService.php" afterPath="$PROJECT_DIR$/vendor/mastCore/crud/ContactService.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/ExchangeService.php" afterPath="$PROJECT_DIR$/vendor/ExchangeService.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ressources/database.sql" afterPath="$PROJECT_DIR$/ressources/database.sql" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.php" afterPath="$PROJECT_DIR$/index.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -31,9 +35,35 @@
       <file leaf-file-name="index.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.30873495" vertical-offset="900" max-vertical-offset="6239">
-              <caret line="65" column="24" selection-start-line="65" selection-start-column="24" selection-end-line="65" selection-end-column="24" />
+            <state vertical-scroll-proportion="0.61445785" vertical-offset="0" max-vertical-offset="6137">
+              <caret line="24" column="29" selection-start-line="24" selection-start-column="29" selection-end-line="24" selection-end-column="29" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ContactService.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/vendor/mastCore/crud/ContactService.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-13.923077" vertical-offset="3038" max-vertical-offset="8789">
+              <caret line="209" column="28" selection-start-line="209" selection-start-column="28" selection-end-line="209" selection-end-column="28" />
+              <folding>
+                <element signature="e#6#94#0#PHP" expanded="false" />
+                <element signature="n#__construct#0;n#ContactService#0;n#!!top" expanded="false" />
+                <marker date="1456433663049" expanded="true" signature="703:724" placeholder="SELECT * FRO..CONTACT..." />
+                <marker date="1456433663049" expanded="true" signature="3584:3704" placeholder="INSERT INTO ..." />
+                <marker date="1456433663049" expanded="true" signature="6762:6998" placeholder="UPDATE CONTA..." />
+                <marker date="1456433663049" expanded="true" signature="10039:10073" placeholder="DELETE FROM ..." />
+                <marker date="1456433663049" expanded="true" signature="12162:12211" placeholder="SELECT * FRO..CONTACT..." />
+                <marker date="1456433663049" expanded="true" signature="12997:13037" placeholder="SELECT * FRO..CONTACT..." />
+                <marker date="1456433663049" expanded="true" signature="14527:14584" placeholder="SELECT * FRO..CONTACT..." />
+                <marker date="1456433663049" expanded="true" signature="14672:14740" placeholder="SELECT * FRO..CONTACT..." />
+                <marker date="1456433663049" expanded="true" signature="14672:14741" placeholder="SELECT * FRO..CONTACT..." />
+                <marker date="1456433663049" expanded="true" signature="14836:14907" placeholder="SELECT * FRO..CONTACT..." />
+                <marker date="1456433663049" expanded="true" signature="14836:14908" placeholder="SELECT * FRO..CONTACT..." />
+                <marker date="1456433663049" expanded="true" signature="15720:15793" placeholder="SELECT * FRO..CONTACT..." />
+                <marker date="1456433663049" expanded="true" signature="15841:15884" placeholder="SELECT * FRO..CONTACT..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -41,8 +71,8 @@
       <file leaf-file-name="MastCoreService.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/vendor/MastCoreService.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="661" max-vertical-offset="1479">
-              <caret line="72" column="61" selection-start-line="72" selection-start-column="61" selection-end-line="72" selection-end-column="61" />
+            <state vertical-scroll-proportion="-2.0" vertical-offset="206" max-vertical-offset="1462">
+              <caret line="25" column="55" selection-start-line="25" selection-start-column="55" selection-end-line="25" selection-end-column="55" />
               <folding>
                 <element signature="e#6#93#0#PHP" expanded="true" />
                 <element signature="n#__construct#0;n#MastCoreService#0;n#!!top" expanded="false" />
@@ -51,28 +81,22 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ContactService.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/vendor/mastCore/crud/ContactService.php">
+      <file leaf-file-name="database.sql" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ressources/database.sql">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-315.80768" vertical-offset="0" max-vertical-offset="8313">
-              <caret line="492" column="1" selection-start-line="492" selection-start-column="1" selection-end-line="492" selection-end-column="1" />
-              <folding>
-                <element signature="e#6#94#0#PHP" expanded="false" />
-                <element signature="n#__construct#0;n#ContactService#0;n#!!top" expanded="false" />
-                <marker date="1454500287713" expanded="true" signature="703:724" placeholder="SELECT * FRO..CONTACT..." />
-                <marker date="1454500287713" expanded="true" signature="3405:3507" placeholder="INSERT INTO ..." />
-                <marker date="1454500287713" expanded="true" signature="6159:6359" placeholder="UPDATE CONTA..." />
-                <marker date="1454500287713" expanded="true" signature="8994:9028" placeholder="DELETE FROM ..." />
-                <marker date="1454500287713" expanded="true" signature="10925:10974" placeholder="SELECT * FRO..CONTACT..." />
-                <marker date="1454500287713" expanded="true" signature="11760:11800" placeholder="SELECT * FRO..CONTACT..." />
-                <marker date="1454500287713" expanded="true" signature="13290:13347" placeholder="SELECT * FRO..CONTACT..." />
-                <marker date="1454500287713" expanded="true" signature="13435:13503" placeholder="SELECT * FRO..CONTACT..." />
-                <marker date="1454500287713" expanded="true" signature="13435:13504" placeholder="SELECT * FRO..CONTACT..." />
-                <marker date="1454500287713" expanded="true" signature="13599:13670" placeholder="SELECT * FRO..CONTACT..." />
-                <marker date="1454500287713" expanded="true" signature="13599:13671" placeholder="SELECT * FRO..CONTACT..." />
-                <marker date="1454500287713" expanded="true" signature="14483:14556" placeholder="SELECT * FRO..CONTACT..." />
-                <marker date="1454500287713" expanded="true" signature="14604:14647" placeholder="SELECT * FRO..CONTACT..." />
-              </folding>
+            <state vertical-scroll-proportion="-22.52" vertical-offset="746" max-vertical-offset="1411">
+              <caret line="77" column="0" selection-start-line="77" selection-start-column="0" selection-end-line="77" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DataBaseConnection.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/vendor/mastCore/crud/DataBaseConnection.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-10.461538" vertical-offset="0" max-vertical-offset="782">
+              <caret line="16" column="29" selection-start-line="16" selection-start-column="29" selection-end-line="16" selection-end-column="29" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -80,7 +104,7 @@
       <file leaf-file-name="TypeService.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/vendor/mastCore/crud/TypeService.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-12.576923" vertical-offset="98" max-vertical-offset="2550">
+            <state vertical-scroll-proportion="55.692307" vertical-offset="1873" max-vertical-offset="2550">
               <caret line="25" column="32" selection-start-line="25" selection-start-column="28" selection-end-line="25" selection-end-column="32" />
               <folding>
                 <marker date="1454499582077" expanded="true" signature="470:488" placeholder="SELECT * FRO..TYPE..." />
@@ -94,66 +118,22 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AddressService.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/vendor/mastCore/crud/AddressService.php">
+      <file leaf-file-name="ExchangeConnection.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/vendor/ExchangeConnection.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-36.0" vertical-offset="2685" max-vertical-offset="3774">
-              <caret line="218" column="20" selection-start-line="218" selection-start-column="20" selection-end-line="218" selection-end-column="20" />
-              <folding>
-                <element signature="e#7#95#0#PHP" expanded="false" />
-                <marker date="1454327977291" expanded="true" signature="566:587" placeholder="SELECT * FRO..ADDRESS..." />
-                <marker date="1454327977291" expanded="true" signature="1574:1610" placeholder="SELECT * FRO..ADDRESS..." />
-                <marker date="1454327977291" expanded="true" signature="3125:3203" placeholder="INSERT INTO ..." />
-                <marker date="1454327977291" expanded="true" signature="4357:4532" placeholder="UPDATE ADDRE..." />
-                <marker date="1454327977291" expanded="true" signature="6332:6366" placeholder="DELETE FROM ..." />
-                <marker date="1454327977291" expanded="true" signature="6954:7242" placeholder="SELECT *, ( ..address..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Address.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/vendor/mastCore/model/Address.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="207" max-vertical-offset="2822">
-              <caret line="9" column="16" selection-start-line="9" selection-start-column="16" selection-end-line="9" selection-end-column="16" />
+            <state vertical-scroll-proportion="-9.807693" vertical-offset="0" max-vertical-offset="765">
+              <caret line="15" column="84" selection-start-line="15" selection-start-column="84" selection-end-line="15" selection-end-column="84" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SearchObject.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/vendor/mastCore/model/SearchObject.php">
+      <file leaf-file-name="Type.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/vendor/mastCore/model/Type.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="403" max-vertical-offset="2533">
-              <caret line="34" column="13" selection-start-line="34" selection-start-column="13" selection-end-line="34" selection-end-column="13" />
-              <folding>
-                <element signature="e#6#86#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Contact.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/vendor/mastCore/model/Contact.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="357" max-vertical-offset="2958">
-              <caret line="45" column="4" selection-start-line="45" selection-start-column="4" selection-end-line="56" selection-end-column="5" />
-              <folding>
-                <element signature="e#6#93#0#PHP" expanded="false" />
-                <element signature="n#getId#0;n#Contact#0;n#!!top" expanded="false" />
-                <element signature="n#setId#0;n#Contact#0;n#!!top" expanded="false" />
-                <element signature="n#getFirstName#0;n#Contact#0;n#!!top" expanded="false" />
-                <element signature="n#setFirstName#0;n#Contact#0;n#!!top" expanded="false" />
-                <element signature="n#getName#0;n#Contact#0;n#!!top" expanded="false" />
-                <element signature="n#setName#0;n#Contact#0;n#!!top" expanded="false" />
-                <element signature="n#getMail#0;n#Contact#0;n#!!top" expanded="false" />
-                <element signature="n#setMail#0;n#Contact#0;n#!!top" expanded="false" />
-                <element signature="n#getPhone#0;n#Contact#0;n#!!top" expanded="false" />
-                <element signature="n#setPhone#0;n#Contact#0;n#!!top" expanded="false" />
-                <element signature="n#getCompany#0;n#Contact#0;n#!!top" expanded="false" />
-                <element signature="n#setCompany#0;n#Contact#0;n#!!top" expanded="false" />
-              </folding>
+            <state vertical-scroll-proportion="-5.230769" vertical-offset="0" max-vertical-offset="1105">
+              <caret line="8" column="10" selection-start-line="8" selection-start-column="10" selection-end-line="8" selection-end-column="10" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -161,8 +141,8 @@
       <file leaf-file-name="ExchangeService.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/vendor/ExchangeService.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="3755" max-vertical-offset="4913">
-              <caret line="179" column="20" selection-start-line="179" selection-start-column="20" selection-end-line="179" selection-end-column="20" />
+            <state vertical-scroll-proportion="-1.0952381" vertical-offset="4396" max-vertical-offset="5423">
+              <caret line="264" column="26" selection-start-line="264" selection-start-column="26" selection-end-line="264" selection-end-column="26" />
               <folding>
                 <element signature="e#6#93#0#PHP" expanded="true" />
               </folding>
@@ -173,7 +153,7 @@
       <file leaf-file-name="GoogleMapService.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/vendor/mastCore/crud/GoogleMapService.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="85" max-vertical-offset="799">
+            <state vertical-scroll-proportion="-15.692307" vertical-offset="0" max-vertical-offset="799">
               <caret line="29" column="28" selection-start-line="29" selection-start-column="28" selection-end-line="29" selection-end-column="28" />
               <folding />
             </state>
@@ -212,16 +192,16 @@
         <option value="$PROJECT_DIR$/vendor/php-ews/NTLMSoapClient/Exchange.php" />
         <option value="$PROJECT_DIR$/vendor/mastCoreService.php" />
         <option value="$PROJECT_DIR$/vendor/GoogleMapService.php" />
-        <option value="$PROJECT_DIR$/vendor/mastCore/model/Contact.php" />
         <option value="$PROJECT_DIR$/vendor/ExchangeConnection.php" />
         <option value="$PROJECT_DIR$/vendor/mastCore/model/Address.php" />
-        <option value="$PROJECT_DIR$/ressources/database.sql" />
-        <option value="$PROJECT_DIR$/vendor/MastCoreService.php" />
-        <option value="$PROJECT_DIR$/vendor/ExchangeService.php" />
         <option value="$PROJECT_DIR$/vendor/mastCore/model/SearchObject.php" />
         <option value="$PROJECT_DIR$/vendor/mastCore/crud/GoogleMapService.php" />
         <option value="$PROJECT_DIR$/vendor/mastCore/crud/AddressService.php" />
         <option value="$PROJECT_DIR$/vendor/mastCore/crud/TypeService.php" />
+        <option value="$PROJECT_DIR$/vendor/mastCore/model/Contact.php" />
+        <option value="$PROJECT_DIR$/ressources/database.sql" />
+        <option value="$PROJECT_DIR$/vendor/ExchangeService.php" />
+        <option value="$PROJECT_DIR$/vendor/MastCoreService.php" />
         <option value="$PROJECT_DIR$/vendor/mastCore/crud/ContactService.php" />
         <option value="$PROJECT_DIR$/index.php" />
       </list>
@@ -360,7 +340,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../website" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="FullScreen" value="false" />
     <property name="options.lastSelected" value="preferences.pluginManager" />
@@ -396,6 +376,9 @@
       <BehatRunner />
       <method />
     </configuration>
+    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
+      <method />
+    </configuration>
     <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
       <node-options />
       <gulpfile />
@@ -403,9 +386,6 @@
       <arguments />
       <pass-parent-envs>true</pass-parent-envs>
       <envs />
-      <method />
-    </configuration>
-    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
       <method />
     </configuration>
     <list size="1">
@@ -442,18 +422,19 @@
     <option name="totallyTimeSpent" value="947000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1552" height="840" extended-state="6" />
+    <frame x="-8" y="-8" width="1552" height="840" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.46648428" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24283855" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32968536" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -464,7 +445,6 @@
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.43228453" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="PHP-CGI Server" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39398086" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20793433" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -505,12 +485,12 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#7#95#0#PHP" expanded="false" />
-            <marker date="1454327977291" expanded="true" signature="566:587" placeholder="SELECT * FRO..ADDRESS..." />
-            <marker date="1454327977291" expanded="true" signature="1574:1610" placeholder="SELECT * FRO..ADDRESS..." />
-            <marker date="1454327977291" expanded="true" signature="3125:3203" placeholder="INSERT INTO ..." />
-            <marker date="1454327977291" expanded="true" signature="4357:4532" placeholder="UPDATE ADDRE..." />
-            <marker date="1454327977291" expanded="true" signature="6332:6366" placeholder="DELETE FROM ..." />
-            <marker date="1454327977291" expanded="true" signature="6954:7242" placeholder="SELECT *, ( ..address..." />
+            <marker date="1454327977291" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..ADDRESS..." />
+            <marker date="1454327977291" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..ADDRESS..." />
+            <marker date="1454327977291" expanded="true" signature="-1:-1" placeholder="INSERT INTO ..." />
+            <marker date="1454327977291" expanded="true" signature="-1:-1" placeholder="UPDATE ADDRE..." />
+            <marker date="1454327977291" expanded="true" signature="-1:-1" placeholder="DELETE FROM ..." />
+            <marker date="1454327977291" expanded="true" signature="-1:-1" placeholder="SELECT *, ( ..address..." />
           </folding>
         </state>
       </provider>
@@ -583,19 +563,19 @@
           <folding>
             <element signature="e#6#94#0#PHP" expanded="false" />
             <element signature="n#__construct#0;n#ContactService#0;n#!!top" expanded="false" />
-            <marker date="1454500287713" expanded="true" signature="703:724" placeholder="SELECT * FRO..CONTACT..." />
-            <marker date="1454500287713" expanded="true" signature="3405:3507" placeholder="INSERT INTO ..." />
-            <marker date="1454500287713" expanded="true" signature="6159:6359" placeholder="UPDATE CONTA..." />
-            <marker date="1454500287713" expanded="true" signature="8994:9028" placeholder="DELETE FROM ..." />
-            <marker date="1454500287713" expanded="true" signature="10925:10974" placeholder="SELECT * FRO..CONTACT..." />
-            <marker date="1454500287713" expanded="true" signature="11760:11800" placeholder="SELECT * FRO..CONTACT..." />
-            <marker date="1454500287713" expanded="true" signature="13290:13347" placeholder="SELECT * FRO..CONTACT..." />
-            <marker date="1454500287713" expanded="true" signature="13435:13503" placeholder="SELECT * FRO..CONTACT..." />
-            <marker date="1454500287713" expanded="true" signature="13435:13504" placeholder="SELECT * FRO..CONTACT..." />
-            <marker date="1454500287713" expanded="true" signature="13599:13670" placeholder="SELECT * FRO..CONTACT..." />
-            <marker date="1454500287713" expanded="true" signature="13599:13671" placeholder="SELECT * FRO..CONTACT..." />
-            <marker date="1454500287713" expanded="true" signature="14483:14556" placeholder="SELECT * FRO..CONTACT..." />
-            <marker date="1454500287713" expanded="true" signature="14604:14647" placeholder="SELECT * FRO..CONTACT..." />
+            <marker date="1456433663049" expanded="true" signature="703:724" placeholder="SELECT * FRO..CONTACT..." />
+            <marker date="1456433663049" expanded="true" signature="3584:3704" placeholder="INSERT INTO ..." />
+            <marker date="1456433663049" expanded="true" signature="6762:6998" placeholder="UPDATE CONTA..." />
+            <marker date="1456433663049" expanded="true" signature="10039:10073" placeholder="DELETE FROM ..." />
+            <marker date="1456433663049" expanded="true" signature="12162:12211" placeholder="SELECT * FRO..CONTACT..." />
+            <marker date="1456433663049" expanded="true" signature="12997:13037" placeholder="SELECT * FRO..CONTACT..." />
+            <marker date="1456433663049" expanded="true" signature="14527:14584" placeholder="SELECT * FRO..CONTACT..." />
+            <marker date="1456433663049" expanded="true" signature="14672:14740" placeholder="SELECT * FRO..CONTACT..." />
+            <marker date="1456433663049" expanded="true" signature="14672:14741" placeholder="SELECT * FRO..CONTACT..." />
+            <marker date="1456433663049" expanded="true" signature="14836:14907" placeholder="SELECT * FRO..CONTACT..." />
+            <marker date="1456433663049" expanded="true" signature="14836:14908" placeholder="SELECT * FRO..CONTACT..." />
+            <marker date="1456433663049" expanded="true" signature="15720:15793" placeholder="SELECT * FRO..CONTACT..." />
+            <marker date="1456433663049" expanded="true" signature="15841:15884" placeholder="SELECT * FRO..CONTACT..." />
           </folding>
         </state>
       </provider>
@@ -628,12 +608,12 @@
           <caret line="34" column="59" selection-start-line="27" selection-start-column="16" selection-end-line="34" selection-end-column="59" />
           <folding>
             <element signature="e#7#95#0#PHP" expanded="false" />
-            <marker date="1454327977291" expanded="true" signature="566:587" placeholder="SELECT * FRO..ADDRESS..." />
-            <marker date="1454327977291" expanded="true" signature="1574:1610" placeholder="SELECT * FRO..ADDRESS..." />
-            <marker date="1454327977291" expanded="true" signature="3125:3203" placeholder="INSERT INTO ..." />
-            <marker date="1454327977291" expanded="true" signature="4357:4532" placeholder="UPDATE ADDRE..." />
-            <marker date="1454327977291" expanded="true" signature="6332:6366" placeholder="DELETE FROM ..." />
-            <marker date="1454327977291" expanded="true" signature="6954:7242" placeholder="SELECT *, ( ..address..." />
+            <marker date="1454327977291" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..ADDRESS..." />
+            <marker date="1454327977291" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..ADDRESS..." />
+            <marker date="1454327977291" expanded="true" signature="-1:-1" placeholder="INSERT INTO ..." />
+            <marker date="1454327977291" expanded="true" signature="-1:-1" placeholder="UPDATE ADDRE..." />
+            <marker date="1454327977291" expanded="true" signature="-1:-1" placeholder="DELETE FROM ..." />
+            <marker date="1454327977291" expanded="true" signature="-1:-1" placeholder="SELECT *, ( ..address..." />
           </folding>
         </state>
       </provider>
@@ -706,19 +686,19 @@
           <folding>
             <element signature="e#6#94#0#PHP" expanded="false" />
             <element signature="n#__construct#0;n#ContactService#0;n#!!top" expanded="false" />
-            <marker date="1454500287713" expanded="true" signature="703:724" placeholder="SELECT * FRO..CONTACT..." />
-            <marker date="1454500287713" expanded="true" signature="3405:3507" placeholder="INSERT INTO ..." />
-            <marker date="1454500287713" expanded="true" signature="6159:6359" placeholder="UPDATE CONTA..." />
-            <marker date="1454500287713" expanded="true" signature="8994:9028" placeholder="DELETE FROM ..." />
-            <marker date="1454500287713" expanded="true" signature="10925:10974" placeholder="SELECT * FRO..CONTACT..." />
-            <marker date="1454500287713" expanded="true" signature="11760:11800" placeholder="SELECT * FRO..CONTACT..." />
-            <marker date="1454500287713" expanded="true" signature="13290:13347" placeholder="SELECT * FRO..CONTACT..." />
-            <marker date="1454500287713" expanded="true" signature="13435:13503" placeholder="SELECT * FRO..CONTACT..." />
-            <marker date="1454500287713" expanded="true" signature="13435:13504" placeholder="SELECT * FRO..CONTACT..." />
-            <marker date="1454500287713" expanded="true" signature="13599:13670" placeholder="SELECT * FRO..CONTACT..." />
-            <marker date="1454500287713" expanded="true" signature="13599:13671" placeholder="SELECT * FRO..CONTACT..." />
-            <marker date="1454500287713" expanded="true" signature="14483:14556" placeholder="SELECT * FRO..CONTACT..." />
-            <marker date="1454500287713" expanded="true" signature="14604:14647" placeholder="SELECT * FRO..CONTACT..." />
+            <marker date="1456433663049" expanded="true" signature="703:724" placeholder="SELECT * FRO..CONTACT..." />
+            <marker date="1456433663049" expanded="true" signature="3584:3704" placeholder="INSERT INTO ..." />
+            <marker date="1456433663049" expanded="true" signature="6762:6998" placeholder="UPDATE CONTA..." />
+            <marker date="1456433663049" expanded="true" signature="10039:10073" placeholder="DELETE FROM ..." />
+            <marker date="1456433663049" expanded="true" signature="12162:12211" placeholder="SELECT * FRO..CONTACT..." />
+            <marker date="1456433663049" expanded="true" signature="12997:13037" placeholder="SELECT * FRO..CONTACT..." />
+            <marker date="1456433663049" expanded="true" signature="14527:14584" placeholder="SELECT * FRO..CONTACT..." />
+            <marker date="1456433663049" expanded="true" signature="14672:14740" placeholder="SELECT * FRO..CONTACT..." />
+            <marker date="1456433663049" expanded="true" signature="14672:14741" placeholder="SELECT * FRO..CONTACT..." />
+            <marker date="1456433663049" expanded="true" signature="14836:14907" placeholder="SELECT * FRO..CONTACT..." />
+            <marker date="1456433663049" expanded="true" signature="14836:14908" placeholder="SELECT * FRO..CONTACT..." />
+            <marker date="1456433663049" expanded="true" signature="15720:15793" placeholder="SELECT * FRO..CONTACT..." />
+            <marker date="1456433663049" expanded="true" signature="15841:15884" placeholder="SELECT * FRO..CONTACT..." />
           </folding>
         </state>
       </provider>
@@ -751,12 +731,12 @@
           <caret line="34" column="59" selection-start-line="27" selection-start-column="16" selection-end-line="34" selection-end-column="59" />
           <folding>
             <element signature="e#7#95#0#PHP" expanded="false" />
-            <marker date="1454327977291" expanded="true" signature="566:587" placeholder="SELECT * FRO..ADDRESS..." />
-            <marker date="1454327977291" expanded="true" signature="1574:1610" placeholder="SELECT * FRO..ADDRESS..." />
-            <marker date="1454327977291" expanded="true" signature="3125:3203" placeholder="INSERT INTO ..." />
-            <marker date="1454327977291" expanded="true" signature="4357:4532" placeholder="UPDATE ADDRE..." />
-            <marker date="1454327977291" expanded="true" signature="6332:6366" placeholder="DELETE FROM ..." />
-            <marker date="1454327977291" expanded="true" signature="6954:7242" placeholder="SELECT *, ( ..address..." />
+            <marker date="1454327977291" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..ADDRESS..." />
+            <marker date="1454327977291" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..ADDRESS..." />
+            <marker date="1454327977291" expanded="true" signature="-1:-1" placeholder="INSERT INTO ..." />
+            <marker date="1454327977291" expanded="true" signature="-1:-1" placeholder="UPDATE ADDRE..." />
+            <marker date="1454327977291" expanded="true" signature="-1:-1" placeholder="DELETE FROM ..." />
+            <marker date="1454327977291" expanded="true" signature="-1:-1" placeholder="SELECT *, ( ..address..." />
           </folding>
         </state>
       </provider>
@@ -882,20 +862,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/mastCore/model/Type.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="51" max-vertical-offset="1020">
-          <caret line="8" column="10" selection-start-line="8" selection-start-column="10" selection-end-line="8" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/mastCore/crud/DataBaseConnection.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="187" max-vertical-offset="697">
-          <caret line="16" column="29" selection-start-line="16" selection-start-column="29" selection-end-line="16" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="694">
@@ -910,45 +876,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/ExchangeConnection.php">
+    <entry file="file://$PROJECT_DIR$/vendor/mastCore/crud/AddressService.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7063712" vertical-offset="0" max-vertical-offset="765">
-          <caret line="15" column="84" selection-start-line="15" selection-start-column="84" selection-end-line="15" selection-end-column="84" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ressources/database.sql">
-      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="595" max-vertical-offset="986">
-          <caret line="35" column="24" selection-start-line="35" selection-start-column="24" selection-end-line="35" selection-end-column="24" />
+        <state vertical-scroll-proportion="-139.26923" vertical-offset="0" max-vertical-offset="3774">
+          <caret line="218" column="20" selection-start-line="218" selection-start-column="20" selection-end-line="218" selection-end-column="20" />
+          <folding>
+            <element signature="e#7#95#0#PHP" expanded="false" />
+            <marker date="1454327977291" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..ADDRESS..." />
+            <marker date="1454327977291" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..ADDRESS..." />
+            <marker date="1454327977291" expanded="true" signature="-1:-1" placeholder="INSERT INTO ..." />
+            <marker date="1454327977291" expanded="true" signature="-1:-1" placeholder="UPDATE ADDRE..." />
+            <marker date="1454327977291" expanded="true" signature="-1:-1" placeholder="DELETE FROM ..." />
+            <marker date="1454327977291" expanded="true" signature="-1:-1" placeholder="SELECT *, ( ..address..." />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/vendor/mastCore/model/Address.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="207" max-vertical-offset="2822">
+        <state vertical-scroll-proportion="-5.8846154" vertical-offset="0" max-vertical-offset="2822">
           <caret line="9" column="16" selection-start-line="9" selection-start-column="16" selection-end-line="9" selection-end-column="16" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/ExchangeService.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="3755" max-vertical-offset="4913">
-          <caret line="179" column="20" selection-start-line="179" selection-start-column="20" selection-end-line="179" selection-end-column="20" />
-          <folding>
-            <element signature="e#6#93#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vendor/mastCore/model/Contact.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="357" max-vertical-offset="2958">
-          <caret line="45" column="4" selection-start-line="45" selection-start-column="4" selection-end-line="56" selection-end-column="5" />
+        <state vertical-scroll-proportion="-21.461538" vertical-offset="88" max-vertical-offset="3638">
+          <caret line="43" column="37" selection-start-line="43" selection-start-column="37" selection-end-line="43" selection-end-column="37" />
           <folding>
             <element signature="e#6#93#0#PHP" expanded="false" />
             <element signature="n#getId#0;n#Contact#0;n#!!top" expanded="false" />
@@ -967,17 +922,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/mastCore/crud/GoogleMapService.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="85" max-vertical-offset="799">
-          <caret line="29" column="28" selection-start-line="29" selection-start-column="28" selection-end-line="29" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vendor/mastCore/model/SearchObject.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="403" max-vertical-offset="2533">
+        <state vertical-scroll-proportion="-22.23077" vertical-offset="0" max-vertical-offset="2533">
           <caret line="34" column="13" selection-start-line="34" selection-start-column="13" selection-end-line="34" selection-end-column="13" />
           <folding>
             <element signature="e#6#86#0#PHP" expanded="true" />
@@ -985,60 +932,33 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/MastCoreService.php">
+    <entry file="file://$PROJECT_DIR$/vendor/mastCore/model/Type.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="661" max-vertical-offset="1479">
-          <caret line="72" column="61" selection-start-line="72" selection-start-column="61" selection-end-line="72" selection-end-column="61" />
-          <folding>
-            <element signature="e#6#93#0#PHP" expanded="true" />
-            <element signature="n#__construct#0;n#MastCoreService#0;n#!!top" expanded="false" />
-          </folding>
+        <state vertical-scroll-proportion="-5.230769" vertical-offset="0" max-vertical-offset="1105">
+          <caret line="8" column="10" selection-start-line="8" selection-start-column="10" selection-end-line="8" selection-end-column="10" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/mastCore/crud/ContactService.php">
+    <entry file="file://$PROJECT_DIR$/vendor/mastCore/crud/DataBaseConnection.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-315.80768" vertical-offset="0" max-vertical-offset="8313">
-          <caret line="492" column="1" selection-start-line="492" selection-start-column="1" selection-end-line="492" selection-end-column="1" />
-          <folding>
-            <element signature="e#6#94#0#PHP" expanded="false" />
-            <element signature="n#__construct#0;n#ContactService#0;n#!!top" expanded="false" />
-            <marker date="1454500287713" expanded="true" signature="703:724" placeholder="SELECT * FRO..CONTACT..." />
-            <marker date="1454500287713" expanded="true" signature="3405:3507" placeholder="INSERT INTO ..." />
-            <marker date="1454500287713" expanded="true" signature="6159:6359" placeholder="UPDATE CONTA..." />
-            <marker date="1454500287713" expanded="true" signature="8994:9028" placeholder="DELETE FROM ..." />
-            <marker date="1454500287713" expanded="true" signature="10925:10974" placeholder="SELECT * FRO..CONTACT..." />
-            <marker date="1454500287713" expanded="true" signature="11760:11800" placeholder="SELECT * FRO..CONTACT..." />
-            <marker date="1454500287713" expanded="true" signature="13290:13347" placeholder="SELECT * FRO..CONTACT..." />
-            <marker date="1454500287713" expanded="true" signature="13435:13503" placeholder="SELECT * FRO..CONTACT..." />
-            <marker date="1454500287713" expanded="true" signature="13435:13504" placeholder="SELECT * FRO..CONTACT..." />
-            <marker date="1454500287713" expanded="true" signature="13599:13670" placeholder="SELECT * FRO..CONTACT..." />
-            <marker date="1454500287713" expanded="true" signature="13599:13671" placeholder="SELECT * FRO..CONTACT..." />
-            <marker date="1454500287713" expanded="true" signature="14483:14556" placeholder="SELECT * FRO..CONTACT..." />
-            <marker date="1454500287713" expanded="true" signature="14604:14647" placeholder="SELECT * FRO..CONTACT..." />
-          </folding>
+        <state vertical-scroll-proportion="-10.461538" vertical-offset="0" max-vertical-offset="782">
+          <caret line="16" column="29" selection-start-line="16" selection-start-column="29" selection-end-line="16" selection-end-column="29" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/mastCore/crud/AddressService.php">
+    <entry file="file://$PROJECT_DIR$/vendor/mastCore/crud/GoogleMapService.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-36.0" vertical-offset="2685" max-vertical-offset="3774">
-          <caret line="218" column="20" selection-start-line="218" selection-start-column="20" selection-end-line="218" selection-end-column="20" />
-          <folding>
-            <element signature="e#7#95#0#PHP" expanded="false" />
-            <marker date="1454327977291" expanded="true" signature="566:587" placeholder="SELECT * FRO..ADDRESS..." />
-            <marker date="1454327977291" expanded="true" signature="1574:1610" placeholder="SELECT * FRO..ADDRESS..." />
-            <marker date="1454327977291" expanded="true" signature="3125:3203" placeholder="INSERT INTO ..." />
-            <marker date="1454327977291" expanded="true" signature="4357:4532" placeholder="UPDATE ADDRE..." />
-            <marker date="1454327977291" expanded="true" signature="6332:6366" placeholder="DELETE FROM ..." />
-            <marker date="1454327977291" expanded="true" signature="6954:7242" placeholder="SELECT *, ( ..address..." />
-          </folding>
+        <state vertical-scroll-proportion="-15.692307" vertical-offset="0" max-vertical-offset="799">
+          <caret line="29" column="28" selection-start-line="29" selection-start-column="28" selection-end-line="29" selection-end-column="28" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/vendor/mastCore/crud/TypeService.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.576923" vertical-offset="98" max-vertical-offset="2550">
+        <state vertical-scroll-proportion="55.692307" vertical-offset="1873" max-vertical-offset="2550">
           <caret line="25" column="32" selection-start-line="25" selection-start-column="28" selection-end-line="25" selection-end-column="32" />
           <folding>
             <marker date="1454499582077" expanded="true" signature="470:488" placeholder="SELECT * FRO..TYPE..." />
@@ -1051,10 +971,74 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/ressources/database.sql">
+      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-22.52" vertical-offset="746" max-vertical-offset="1411">
+          <caret line="77" column="0" selection-start-line="77" selection-start-column="0" selection-end-line="77" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/ExchangeConnection.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.807693" vertical-offset="0" max-vertical-offset="765">
+          <caret line="15" column="84" selection-start-line="15" selection-start-column="84" selection-end-line="15" selection-end-column="84" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/MastCoreService.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.0" vertical-offset="206" max-vertical-offset="1462">
+          <caret line="25" column="55" selection-start-line="25" selection-start-column="55" selection-end-line="25" selection-end-column="55" />
+          <folding>
+            <element signature="e#6#93#0#PHP" expanded="true" />
+            <element signature="n#__construct#0;n#MastCoreService#0;n#!!top" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/ExchangeService.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.0952381" vertical-offset="4396" max-vertical-offset="5423">
+          <caret line="264" column="26" selection-start-line="264" selection-start-column="26" selection-end-line="264" selection-end-column="26" />
+          <folding>
+            <element signature="e#6#93#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/mastCore/crud/ContactService.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-13.923077" vertical-offset="3038" max-vertical-offset="8789">
+          <caret line="209" column="28" selection-start-line="209" selection-start-column="28" selection-end-line="209" selection-end-column="28" />
+          <folding>
+            <element signature="e#6#94#0#PHP" expanded="false" />
+            <element signature="n#__construct#0;n#ContactService#0;n#!!top" expanded="false" />
+            <marker date="1456433663049" expanded="true" signature="703:724" placeholder="SELECT * FRO..CONTACT..." />
+            <marker date="1456433663049" expanded="true" signature="3584:3704" placeholder="INSERT INTO ..." />
+            <marker date="1456433663049" expanded="true" signature="6762:6998" placeholder="UPDATE CONTA..." />
+            <marker date="1456433663049" expanded="true" signature="10039:10073" placeholder="DELETE FROM ..." />
+            <marker date="1456433663049" expanded="true" signature="12162:12211" placeholder="SELECT * FRO..CONTACT..." />
+            <marker date="1456433663049" expanded="true" signature="12997:13037" placeholder="SELECT * FRO..CONTACT..." />
+            <marker date="1456433663049" expanded="true" signature="14527:14584" placeholder="SELECT * FRO..CONTACT..." />
+            <marker date="1456433663049" expanded="true" signature="14672:14740" placeholder="SELECT * FRO..CONTACT..." />
+            <marker date="1456433663049" expanded="true" signature="14672:14741" placeholder="SELECT * FRO..CONTACT..." />
+            <marker date="1456433663049" expanded="true" signature="14836:14907" placeholder="SELECT * FRO..CONTACT..." />
+            <marker date="1456433663049" expanded="true" signature="14836:14908" placeholder="SELECT * FRO..CONTACT..." />
+            <marker date="1456433663049" expanded="true" signature="15720:15793" placeholder="SELECT * FRO..CONTACT..." />
+            <marker date="1456433663049" expanded="true" signature="15841:15884" placeholder="SELECT * FRO..CONTACT..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.30873495" vertical-offset="900" max-vertical-offset="6239">
-          <caret line="65" column="24" selection-start-line="65" selection-start-column="24" selection-end-line="65" selection-end-column="24" />
+        <state vertical-scroll-proportion="0.61445785" vertical-offset="0" max-vertical-offset="6137">
+          <caret line="24" column="29" selection-start-line="24" selection-start-column="29" selection-end-line="24" selection-end-column="29" />
           <folding />
         </state>
       </provider>

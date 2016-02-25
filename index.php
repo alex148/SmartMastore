@@ -22,7 +22,7 @@ session_cache_limiter(false);
 session_start();
 
 $app = new \Slim\App();
-$app->config('debug', true);
+$app->config('debug', false);
 
 $key = 'M@st0r_Key_Secured';
 $_SERVER['key'] = '72c5e00cb6c620fa3a8d4277cb84d83c58dea23be4b931dfad9eeff59d5bc6918ac42db511c7856c3b859c8c440924ef';
@@ -199,18 +199,6 @@ $app->post('/searchContacts',function (\Slim\Http\Request $request, \Slim\Http\R
     return error($response, ' SEARCH CONTACT UNKNOWN ERROR');
 });
 
-$app->get('/test',function (\Slim\Http\Request $request, \Slim\Http\Response $response, $args) use ($app){
-    $contact = new Contact();
-    $contact->setFirstName('tt');
-    $contact->setName('yyy');
-    $contact->setPhone('0658745230');
-    $contact->setMail('tr@hotmail.fr');
-    $contact->setExchangeId("AAAPAFRvdG9Ac2l0YWxpYS5mcgBGAAAAAADUeCkQ3EMJTKBA3gJNfi4uBwAxDqrT2rrGSrf1tQt3lJQmAAAAAAEOAAAxDqrT2rrGSrf1tQt3lJQmAAAAABMsAAA=");
-    $ex = new ExchangeService();
-    $cc = $ex->deleteContact($contact);
-
-
-});
 
 function has_access(\Slim\Http\Request $request){
     try{
@@ -303,6 +291,12 @@ function contactParser($data){
     }
     if(isset($data['phone'])){
         $contact->setPhone($data['phone']);
+    }
+    if(isset($data['phone2'])){
+        $contact->setPhone2($data['phone2']);
+    }
+    if(isset($data['phone3'])){
+        $contact->setPhone3($data['phone3']);
     }
     if(isset($data['company'])){
         $contact->setCompany($data['company']);

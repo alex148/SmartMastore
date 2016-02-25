@@ -20,6 +20,10 @@ class Contact implements \JsonSerializable{
 
     private $phone;
 
+    private $phone2;
+
+    private $phone3;
+
     private $company;
 
     private $address;
@@ -36,6 +40,8 @@ class Contact implements \JsonSerializable{
             'name' => $this->name,
             'mail'=> $this->mail,
             'phone' => $this->phone,
+            'phone2' => $this->phone2,
+            'phone3' => $this->phone3,
             'company' => $this->company,
             'address' => $this->address,
             'type' => $this->type,
@@ -50,6 +56,8 @@ class Contact implements \JsonSerializable{
         $this->name = null;
         $this->mail = null;
         $this->phone = null;
+        $this->phone2 = null;
+        $this->phone3 = null;
         $this->company = null;
         $this->address = null;
         $this->type = null;
@@ -199,6 +207,38 @@ class Contact implements \JsonSerializable{
     public function setExchangeId($exchangeId)
     {
         $this->exchangeId = $exchangeId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPhone2()
+    {
+        return $this->phone2;
+    }
+
+    /**
+     * @param mixed $phone2
+     */
+    public function setPhone2($phone2)
+    {
+        $this->phone2 = $phone2;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPhone3()
+    {
+        return $this->phone3;
+    }
+
+    /**
+     * @param mixed $phone3
+     */
+    public function setPhone3($phone3)
+    {
+        $this->phone3 = $phone3;
     }
 
 

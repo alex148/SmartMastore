@@ -25,7 +25,6 @@ class MastCoreService {
             $error = false;
             $dbContacts = $this->databaseService->getAllContacts();
             $exContacts = $this->exchangeService->getAllContacts();
-
             if($exContacts == null && $dbContacts != null){
                 foreach($dbContacts as $contact){
                     $this->exchangeService->addContact($contact);
