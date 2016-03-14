@@ -12,8 +12,7 @@ abstract class ExchangeConnection {
 
     public function __construct(){
         try {
-              //$this->ews = new ExchangeWebServices("ex.mail.ovh.net", "contact@sitalia.fr", "Nv412glk");
-            $this->ews = new ExchangeWebServices("ex.mail.ovh.net", "Toto@sitalia.fr", "063214577");
+            $this->ews = new ExchangeWebServices("Mail Server", "Mail exchange", "password");
         }catch(Exception $e){
             error_log($e->getMessage());
         }
