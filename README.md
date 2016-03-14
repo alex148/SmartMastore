@@ -4,12 +4,12 @@
 Permet de synchroniser des contacts entre une base de données Exchange et MySql. Objectif : gérer une liste de contact sur une application afin de les trouver grace à un moteur de recherche (liste de contact / map)
 
 SmartMastore : WebService rest (JSON) basé sur SlimFramework + PHP-EWS (https://github.com/jamesiarmes/php-ews/). Permet de :
--Récupérer tous les contacts sur la base MySql
--Mettre à jour un contact (Exchange + Mysql)
--Ajouter un contact (Exchange + MySql)
--Supprimer un contact (Exchange + MySql)
--Synchroniser les deux bases (en cas de modification directe sur Exchange)
--Rechercher des contacts (Nom, prénom, type, adresse, rayon, entreprise)
+##Récupérer tous les contacts sur la base MySql
+##Mettre à jour un contact (Exchange + Mysql)
+##Ajouter un contact (Exchange + MySql)
+##Supprimer un contact (Exchange + MySql)
+##Synchroniser les deux bases (en cas de modification directe sur Exchange)
+##Rechercher des contacts (Nom, prénom, type, adresse, rayon, entreprise)
 
 ##Fonction updateContact / addContact / deleteContact 
 
